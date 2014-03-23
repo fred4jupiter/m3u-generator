@@ -14,7 +14,7 @@ public class M3UPlaylistGenerator implements PlaylistGenerator {
 
     private void writePlaylistFor(File baseDirFile) throws IOException {
         DirectoryWalker directoryWalker = new DirectoryWalker(baseDirFile);
-        OneFilePlaylistListener listener = new OneFilePlaylistListener();
+        PlaylistDirectoryListener listener = new PlaylistDirectoryListener();
         directoryWalker.registerListener(listener);
         directoryWalker.scanDir(baseDirFile);
         listener.writePlaylistToFile(baseDirFile);
@@ -33,7 +33,7 @@ public class M3UPlaylistGenerator implements PlaylistGenerator {
 
         for (File dir : dirs) {
             DirectoryWalker directoryWalker = new DirectoryWalker(baseDirFile);
-            OneFilePlaylistListener listener = new OneFilePlaylistListener();
+            PlaylistDirectoryListener listener = new PlaylistDirectoryListener();
             directoryWalker.registerListener(listener);
             directoryWalker.scanDir(dir);
             listener.writePlaylistToFile(baseDirFile, dir.getName() + ".m3u");

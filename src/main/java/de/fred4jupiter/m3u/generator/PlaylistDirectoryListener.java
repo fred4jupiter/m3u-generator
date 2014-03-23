@@ -6,11 +6,11 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
 
-public class OneFilePlaylistListener implements DirectoryListener {
+public class PlaylistDirectoryListener implements DirectoryListener {
 
     private StringBuilder stringBuilder;
 
-    public OneFilePlaylistListener() {
+    public PlaylistDirectoryListener() {
         stringBuilder = new StringBuilder();
     }
 
