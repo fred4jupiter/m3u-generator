@@ -16,15 +16,13 @@ public class PlaylistGeneratorTest {
 
     @Test
     public void generateOnePlaylistForAll() throws IOException {
-        // final String baseDir = "m:\\Musik\\30SecondsToMars\\";
-        final String baseDir = "d:/temp3";
-        playlistGenerator.generateOnePlaylistForAll(baseDir);
+        playlistGenerator.createOnePlaylistForAll("e:/", "Playlist.m3u");
     }
 
     @Test
     public void generatePlaylistsForEachDirectory() throws IOException {
-        final String baseDir = "m:\\Musik\\30SecondsToMars\\";
-        //final String baseDir = "d:/temp3";
-        playlistGenerator.generatePlaylistsForEachDirectory(baseDir);
+        //final String baseDir = "m:\\Musik\\30SecondsToMars\\";
+        final String baseDir = "e:/";
+        playlistGenerator.createPlaylistsForEachDirectory(baseDir);
     }
 }

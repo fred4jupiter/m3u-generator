@@ -4,7 +4,7 @@ import java.io.IOException;
 
 public interface PlaylistGenerator {
 
-    void generateOnePlaylistForAll(String baseDir) throws IOException;
+    void createOnePlaylistForAll(String baseDir, String playlistName) throws IOException;
 
-    void generatePlaylistsForEachDirectory(String baseDir) throws IOException;
+    void createPlaylistsForEachDirectory(String baseDir) throws IOException;
 }

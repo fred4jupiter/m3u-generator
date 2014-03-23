@@ -7,21 +7,17 @@ import java.io.IOException;
 public class M3UPlaylistGenerator implements PlaylistGenerator {
 
     @Override
-    public void generateOnePlaylistForAll(String baseDir) throws IOException {
+    public void createOnePlaylistForAll(String baseDir, String playlistName) throws IOException {
         final File baseDirFile = new File(baseDir);
-        writePlaylistFor(baseDirFile);
-    }
-
-    private void writePlaylistFor(File baseDirFile) throws IOException {
         DirectoryWalker directoryWalker = new DirectoryWalker(baseDirFile);
         PlaylistDirectoryListener listener = new PlaylistDirectoryListener();
         directoryWalker.registerListener(listener);
         directoryWalker.scanDir(baseDirFile);
-        listener.writePlaylistToFile(baseDirFile);
+        listener.writePlaylistToFile(baseDirFile, playlistName);
     }
 
     @Override
-    public void generatePlaylistsForEachDirectory(String baseDir) throws IOException {
+    public void createPlaylistsForEachDirectory(String baseDir) throws IOException {
         final File baseDirFile = new File(baseDir);
 
         File[] dirs = baseDirFile.listFiles(new FileFilter() {
