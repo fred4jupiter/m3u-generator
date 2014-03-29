@@ -44,18 +44,18 @@ public class PlaylistDirectoryListener implements DirectoryListener {
         return writePlaylistToFile(baseDirFile, null);
     }
 
-    public File writePlaylistToFile(File baseDirFile, String filename) throws IOException {
+    public File writePlaylistToFile(File baseDirFile, String playlistName) throws IOException {
         String content = getContent();
         if (content == null || "".equals(content)) {
             return null;
         }
 
-        String tmpFilename = filename;
-        if (tmpFilename == null) {
-            tmpFilename = baseDirFile.getName() + ".m3u";
+        String tmpPlaylistName = playlistName;
+        if (tmpPlaylistName == null) {
+            tmpPlaylistName = baseDirFile.getName() + ".m3u";
         }
 
-        File file = new File(baseDirFile.getAbsolutePath() + File.separator + tmpFilename);
+        File file = new File(baseDirFile.getAbsolutePath() + File.separator + tmpPlaylistName);
         FileUtils.writeStringToFile(file, getContent());
         return file;
     }

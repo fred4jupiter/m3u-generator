@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -35,12 +34,7 @@ public class DirectoryWalker {
         String relativePath = calculateRelativePath(dirPath, depth);
         notifyOnEnteringDirectory(dir, relativePath, depth);
 
-        File[] directories = dir.listFiles(new FileFilter() {
-            @Override
-            public boolean accept(File file) {
-                return file.isDirectory();
-            }
-        });
+        File[] directories = dir.listFiles(file -> file.isDirectory());
 
         SortingUtil.sortFilesByName(directories);
         for (File directory : directories) {
