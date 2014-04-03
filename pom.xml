@@ -119,7 +119,7 @@
         <dependency>
             <groupId>org.springframework.shell</groupId>
             <artifactId>spring-shell</artifactId>
-            <version>1.0.0.RELEASE</version>
+            <version>1.1.0.RC1</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -134,9 +134,12 @@
 
     <repositories>
         <repository>
-            <id>repository.springsource.release</id>
-            <name>SpringSource GA Repository</name>
-            <url>http://repo.springsource.org/release</url>
+            <id>libs-milestone</id>
+            <url>http://repo.springsource.org/libs-milestone/</url>
+        </repository>
+        <repository>
+            <id>libs-release</id>
+            <url>http://repo.springsource.org/libs-release/</url>
         </repository>
     </repositories>
 
