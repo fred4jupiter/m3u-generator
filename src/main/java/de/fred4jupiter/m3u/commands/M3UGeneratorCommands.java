@@ -18,9 +18,20 @@ public class M3UGeneratorCommands implements CommandMarker {
     @CliCommand(value = "m3u oneForAll", help = "Generates one playlist for a given base directory")
     public void createOnePlaylistForAll(
             @CliOption(key = {"basedir"}, mandatory = true, help = "The directory where to scan files for the M3U playlist.") final String baseDir,
-            @CliOption(key = {"playlistName"}, mandatory = false, help = "The name of the playlist", specifiedDefaultValue = "Playlist.m3u") final String playlistName) {
+            @CliOption(key = {"playlistName"}, mandatory = false, help = "The name of the playlist",
+                    specifiedDefaultValue = "PlayAllPlaylist.m3u") final String playlistName) {
         try {
             this.playlistGenerator.createOnePlaylistForAll(baseDir, playlistName);
+        } catch (IOException e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
+    }
+
+    @CliCommand(value = "m3u forEachDirLevelOne", help = "Generates playlists for each subdirectory one first level hierarchy")
+    public void createPlaylistsForEachDirectory(@CliOption(key = {"basedir"},
+            mandatory = true, help = "The directory where to scan files for the M3U playlist.") final String baseDir) {
+        try {
+            this.playlistGenerator.createPlaylistsForEachDirectory(baseDir);
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage(), e);
         }

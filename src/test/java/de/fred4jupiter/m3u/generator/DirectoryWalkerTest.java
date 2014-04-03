@@ -5,6 +5,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.IOException;
+
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.Assert.*;
 
 public class DirectoryWalkerTest {
 
@@ -12,14 +17,32 @@ public class DirectoryWalkerTest {
 
     @Test
     public void scanDir() {
-        //final File baseDir = new File("m:\\Musik\\30SecondsToMars\\");
-        final File baseDir = new File("d:/temp3");
+        final File baseDir = new File("src/test/resources/mp3DummyFolder");
 
         DirectoryWalker directoryWalker = new DirectoryWalker(baseDir);
-        directoryWalker.registerListener((dir, relativeDirectoryPrefix, depth) -> {
-            LOG.debug("dir={}, relativeDirectoryPrefix={}, depth={}", dir, relativeDirectoryPrefix, depth);
-        });
+        AssertingDirectoryListener assertingDirectoryListener = new AssertingDirectoryListener();
+        directoryWalker.registerListener(assertingDirectoryListener);
 
         directoryWalker.scanDir(baseDir);
+
+        String content = assertingDirectoryListener.getContent();
+        assertThat(content, notNullValue());
+        LOG.debug(content);
+        assertThat(content, containsString("genesis"));
+        assertThat(content, containsString("nirvana"));
+    }
+
+    private static final class AssertingDirectoryListener implements DirectoryListener {
+        private StringBuilder stringBuilder = new StringBuilder();
+
+        @Override
+        public void onEnterDirectory(File dir, String relativeDirectoryPrefix, int depth) {
+            stringBuilder.append(relativeDirectoryPrefix);
+            stringBuilder.append("\n");
+        }
+
+        public String getContent() {
+            return stringBuilder.toString();
+        }
     }
 }
