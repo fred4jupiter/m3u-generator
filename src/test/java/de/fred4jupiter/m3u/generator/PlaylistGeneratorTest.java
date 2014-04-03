@@ -1,7 +1,6 @@
 package de.fred4jupiter.m3u.generator;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.shell.support.util.FileUtils;
@@ -13,12 +12,13 @@ import java.io.IOException;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:/META-INF/spring/spring-shell-plugin.xml")
 public class PlaylistGeneratorTest {
+
+    private static final String BASE_DIR = "src/test/resources/mp3DummyFolder";
 
     private PlaylistGenerator playlistGenerator;
 
@@ -29,11 +29,10 @@ public class PlaylistGeneratorTest {
 
     @Test
     public void generateOnePlaylistForAll() throws IOException {
-        String baseDir = "src/test/resources/mp3DummyFolder";
-        String playlistName = "Playlist.m3u";
+        final String playlistName = "Playlist.m3u";
 
-        playlistGenerator.createOnePlaylistForAll(baseDir, playlistName);
-        File generatedPlaylistFile = new File(baseDir + File.separator + playlistName);
+        playlistGenerator.createOnePlaylistForAll(BASE_DIR, playlistName);
+        File generatedPlaylistFile = new File(BASE_DIR + File.separator + playlistName);
         assertThat(generatedPlaylistFile.exists(), equalTo(true));
         String playlistContent = FileUtils.read(generatedPlaylistFile);
         assertNotNull(playlistContent);
@@ -43,8 +42,17 @@ public class PlaylistGeneratorTest {
 
     @Test
     public void generatePlaylistsForEachDirectory() throws IOException {
-        //final String baseDir = "m:\\Musik\\30SecondsToMars\\";
-        final String baseDir = "e:/";
-        playlistGenerator.createPlaylistsForEachDirectory(baseDir);
+        playlistGenerator.createPlaylistsForEachDirectory(BASE_DIR);
+
+        checkPlaylist("genesis.m3u", "genesis" + File.separator + "song1.mp3");
+        checkPlaylist("nirvana.m3u", "nirvana" + File.separator + "song2.mp3");
+    }
+
+    private void checkPlaylist(String playlistName, String fileContent) {
+        File playlistGenesis = new File(BASE_DIR + File.separator + playlistName);
+        assertThat(playlistGenesis.exists(), equalTo(true));
+        String playlistContent = FileUtils.read(playlistGenesis);
+        assertNotNull(playlistContent);
+        assertThat(playlistContent, containsString(fileContent));
     }
 }

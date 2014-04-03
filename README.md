@@ -1,4 +1,28 @@
-m3u-generator
-=============
+# m3u-generator #
+-----------------
+Simple project for creating m3u playlists with Spring-Shell.
 
-Simple project for creating m3u playlists.
+## Usage ##
+
+To build the project run
+
+    mvn install
+
+To run the programm call
+
+    cd target
+    java -jar m3u-generator-VERSION.jar
+
+On Spring Shell you have to following options
+
+    spring-shell>m3u forEachDirLevelOnem3u
+    spring-shell>m3u oneForAll
+    
+Examples:
+
+    spring-shell>m3u forEachDirLevelOne --basedir d:/Temp4
+    spring-shell>m3u oneForAll --basedir d:/Temp4 --playlistName "Fred.m3u"
+
+For more help, please enter just
+
+    spring-shell>help
