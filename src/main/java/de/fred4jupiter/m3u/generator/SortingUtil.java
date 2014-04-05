@@ -7,7 +7,7 @@ import java.util.Collections;
 public final class SortingUtil {
 
     private SortingUtil() {
-
+        // avoid instance creation
     }
 
     public static void sortFilesByName(File[] directoryFiles) {

@@ -16,12 +16,7 @@ public class PlaylistDirectoryListener implements DirectoryListener {
 
     @Override
     public void onEnterDirectory(File dir, String relativeDirectoryPrefix, int depth) {
-        File[] files = dir.listFiles(new FileFilter() {
-            @Override
-            public boolean accept(File file) {
-                return file.isFile() && file.getName().endsWith(".mp3");
-            }
-        });
+        File[] files = dir.listFiles(file -> file.isFile() && file.getName().endsWith(".mp3"));
 
         SortingUtil.sortFilesByName(files);
 
