@@ -26,3 +26,9 @@ Examples:
 For more help, please just enter
 
     spring-shell>help
+
+## Travis CI ##
+
+The current build status can be found on
+
+[https://travis-ci.org/fred4jupiter/m3u-generator](https://travis-ci.org/fred4jupiter/m3u-generator "Travis CI")
