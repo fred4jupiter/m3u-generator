@@ -9,6 +9,9 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Helper class traversing the directory tree.
+ */
 public class DirectoryWalker {
 
     private static final Logger LOG = LoggerFactory.getLogger(DirectoryWalker.class);

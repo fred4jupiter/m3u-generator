@@ -104,6 +104,12 @@
             <version>1.0.13</version>
             <scope>runtime</scope>
         </dependency>
+        <!-- Bridge for commons logging to route spring log entries to logback -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>1.7.7</version>
+        </dependency>
         <dependency>
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest-library</artifactId>

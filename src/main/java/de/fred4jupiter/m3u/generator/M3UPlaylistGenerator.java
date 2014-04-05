@@ -6,6 +6,9 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * PlaylistGenerator for M3U playlists.
+ */
 @Service
 public class M3UPlaylistGenerator implements PlaylistGenerator {
 
@@ -33,7 +36,7 @@ public class M3UPlaylistGenerator implements PlaylistGenerator {
             PlaylistDirectoryListener listener = new PlaylistDirectoryListener();
             directoryWalker.registerListener(listener);
             directoryWalker.scanDir(dir);
-            listener.writePlaylistToFile(baseDirFile, dir.getName() + ".m3u");
+            listener.writePlaylistToFile(baseDirFile, dir.getName() + FileConstants.M3U_PLAYLIST_FILE_EXTENSION);
         }
     }
 
