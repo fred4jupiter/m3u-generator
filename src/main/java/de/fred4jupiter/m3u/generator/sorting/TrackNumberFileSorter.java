@@ -36,11 +36,19 @@ public class TrackNumberFileSorter implements FileSorter {
         Integer trackNumberOne = getTracknumber(mp3FileOne);
         Integer trackNumberTwo = getTracknumber(mp3FileTwo);
 
-        if (trackNumberOne != null && trackNumberTwo != null) {
-            return trackNumberOne.compareTo(trackNumberTwo);
+        if (trackNumberOne == null && trackNumberTwo == null) {
+            return 0;
         }
 
-        return fileOne.getName().compareTo(fileTwo.getName());
+        if (trackNumberOne == null && trackNumberTwo != null) {
+            return 1;
+        }
+
+        if (trackNumberOne != null && trackNumberTwo == null) {
+            return -1;
+        }
+
+        return trackNumberOne.compareTo(trackNumberTwo);
     }
 
     private Mp3File createMp3File(File file) {
