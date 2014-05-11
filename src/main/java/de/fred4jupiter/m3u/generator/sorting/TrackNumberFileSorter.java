@@ -30,33 +30,49 @@ public class TrackNumberFileSorter implements FileSorter {
     }
 
     private int compareFiles(File fileOne, File fileTwo) {
+        Mp3File mp3FileOne = createMp3File(fileOne);
+        Mp3File mp3FileTwo = createMp3File(fileTwo);
+
+        Integer trackNumberOne = getTracknumber(mp3FileOne);
+        Integer trackNumberTwo = getTracknumber(mp3FileTwo);
+
+        if (trackNumberOne != null && trackNumberTwo != null) {
+            return trackNumberOne.compareTo(trackNumberTwo);
+        }
+
+        return fileOne.getName().compareTo(fileTwo.getName());
+    }
+
+    private Mp3File createMp3File(File file) {
         try {
-            Mp3File mp3FileOne = new Mp3File(fileOne.getAbsolutePath());
-            Mp3File mp3FileTwo = new Mp3File(fileTwo.getAbsolutePath());
-
-            Integer trackNumberOne = getTracknumber(mp3FileOne);
-            Integer trackNumberTwo = getTracknumber(mp3FileTwo);
-
-            if (trackNumberOne != null && trackNumberTwo != null) {
-                return trackNumberOne.compareTo(trackNumberTwo);
-            }
-
-            return fileOne.getName().compareTo(fileTwo.getName());
+            return new Mp3File(file.getAbsolutePath());
         } catch (UnsupportedTagException | InvalidDataException | IOException e) {
             LOG.error(e.getMessage(), e);
-            throw new PlaylistCreationException(e.getMessage(), e);
+            throw new PlaylistCreationException("Error getting absolute file path. filename=" + file.getName() + ", cause: " + e.getMessage(), e);
         }
     }
 
     private Integer getTracknumber(Mp3File mp3File) {
-        if (mp3File.hasId3v2Tag() && StringUtils.isNotBlank(mp3File.getId3v2Tag().getTrack())) {
-            return Integer.valueOf(mp3File.getId3v2Tag().getTrack());
-        }
+        try {
+            if (mp3File.hasId3v2Tag() && StringUtils.isNotBlank(mp3File.getId3v2Tag().getTrack())) {
+                return convertToTrackNumber(mp3File.getId3v2Tag().getTrack());
+            }
 
-        if (mp3File.hasId3v1Tag() && StringUtils.isNotBlank(mp3File.getId3v1Tag().getTrack())) {
-            return Integer.valueOf(mp3File.getId3v1Tag().getTrack());
+            if (mp3File.hasId3v1Tag() && StringUtils.isNotBlank(mp3File.getId3v1Tag().getTrack())) {
+                return convertToTrackNumber(mp3File.getId3v1Tag().getTrack());
+            }
+        } catch (NumberFormatException e) {
+            LOG.error("Could not convert track number to integer value. fileName: {}, cause: {}", mp3File.getFilename(), e.getMessage());
         }
 
         return null;
+    }
+
+    private Integer convertToTrackNumber(String trackNumberString) {
+        if (trackNumberString.contains("/")) {
+            String[] splitted = trackNumberString.split("/");
+            return Integer.valueOf(splitted[0]);
+        }
+        return Integer.valueOf(trackNumberString);
     }
 }
