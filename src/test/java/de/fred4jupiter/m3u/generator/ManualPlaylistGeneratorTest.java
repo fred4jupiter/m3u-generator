@@ -22,4 +22,11 @@ public class ManualPlaylistGeneratorTest {
 
         playlistGenerator.createOnePlaylistForAll(baseDir, playlistName, false);
     }
+
+    @Test
+    public void generatePlaylistForEachDir() throws IOException {
+        final String baseDir = "e:/";
+
+        playlistGenerator.createPlaylistsForEachDirectory(baseDir, false);
+    }
 }

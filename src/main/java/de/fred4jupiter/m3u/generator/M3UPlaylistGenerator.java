@@ -32,13 +32,9 @@ public class M3UPlaylistGenerator implements PlaylistGenerator {
         final File baseDirFile = new File(baseDir);
         checkIfDirectoryExists(baseDirFile);
 
-        createPlaylist(playlistName, sortByTrackNumber, baseDirFile);
-    }
-
-    private void createPlaylist(String playlistName, boolean sortByTrackNumber, File baseDirFile) throws IOException {
         DirectoryWalker directoryWalker = new DirectoryWalker(baseDirFile);
         FileSorter fileSorter = sortByTrackNumber ? trackNumberSorter : fileNameSorter;
-        LOG.info("createPlaylist: using sorter: " + fileSorter.getClass().getName());
+        LOG.info("createPlaylist: using sorter: " + fileSorter.getClass().getSimpleName());
         PlaylistDirectoryListener listener = new PlaylistDirectoryListener(fileSorter);
         directoryWalker.registerListener(listener);
         directoryWalker.scanDir(baseDirFile);
@@ -53,8 +49,13 @@ public class M3UPlaylistGenerator implements PlaylistGenerator {
         File[] dirs = baseDirFile.listFiles(file -> file.isDirectory());
 
         for (File dir : dirs) {
-            String playlistName = dir.getName() + FileConstants.M3U_PLAYLIST_FILE_EXTENSION;
-            createPlaylist(playlistName, sortByTrackNumber, baseDirFile);
+            DirectoryWalker directoryWalker = new DirectoryWalker(baseDirFile);
+            FileSorter fileSorter = sortByTrackNumber ? trackNumberSorter : fileNameSorter;
+            LOG.info("createPlaylist: using sorter: " + fileSorter.getClass().getSimpleName());
+            PlaylistDirectoryListener listener = new PlaylistDirectoryListener(fileSorter);
+            directoryWalker.registerListener(listener);
+            directoryWalker.scanDir(dir);
+            listener.writePlaylistToFile(baseDirFile, dir.getName() + FileConstants.M3U_PLAYLIST_FILE_EXTENSION);
         }
     }
 
