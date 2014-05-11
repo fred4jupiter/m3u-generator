@@ -1,5 +1,6 @@
 package de.fred4jupiter.m3u.generator;
 
+import de.fred4jupiter.m3u.generator.sorting.FileSorter;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -20,7 +21,10 @@ public class PlaylistDirectoryListener implements DirectoryListener {
 
     private StringBuilder stringBuilder;
 
-    public PlaylistDirectoryListener() {
+    private final FileSorter fileSorter;
+
+    public PlaylistDirectoryListener(FileSorter fileSorter) {
+        this.fileSorter = fileSorter;
         stringBuilder = new StringBuilder();
     }
 
@@ -28,7 +32,7 @@ public class PlaylistDirectoryListener implements DirectoryListener {
     public void onEnterDirectory(File dir, String relativeDirectoryPrefix, int depth) {
         File[] files = dir.listFiles(file -> file.isFile() && file.getName().endsWith(FileConstants.MP3_FILE_EXTENSION));
 
-        SortingUtil.sortFilesByName(files);
+        fileSorter.sortFiles(files);
 
         for (File file : files) {
             if (StringUtils.isNotBlank(relativeDirectoryPrefix)) {

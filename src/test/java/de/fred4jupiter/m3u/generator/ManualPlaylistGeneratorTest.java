@@ -17,7 +17,7 @@ public class ManualPlaylistGeneratorTest {
 
     @Test
     public void generateOnePlaylistForAll() throws IOException {
-        final String baseDir = "m:\\Musik\\30SecondsToMars\\";
+        final String baseDir = "d:/Temp4";
         final String playlistName = "Playlist.m3u";
 
         playlistGenerator.createOnePlaylistForAll(baseDir, playlistName);

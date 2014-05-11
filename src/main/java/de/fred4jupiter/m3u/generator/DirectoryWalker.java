@@ -1,5 +1,6 @@
 package de.fred4jupiter.m3u.generator;
 
+import de.fred4jupiter.m3u.generator.sorting.FileSorter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -7,6 +8,8 @@ import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -39,7 +42,8 @@ public class DirectoryWalker {
 
         File[] directories = dir.listFiles(file -> file.isDirectory());
 
-        SortingUtil.sortFilesByName(directories);
+        Collections.sort(Arrays.asList(directories), (fileOne, fileTwo) -> fileOne.getName().compareTo(fileTwo.getName()));
+
         for (File directory : directories) {
             if (directory.isDirectory()) {
                 scanDir(baseDir, directory);
