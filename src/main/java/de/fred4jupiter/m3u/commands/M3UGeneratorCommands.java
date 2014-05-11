@@ -36,7 +36,7 @@ public class M3UGeneratorCommands implements CommandMarker {
             @CliOption(key = {"basedir"}, mandatory = true, help = "The directory where to scan files for the M3U playlist.") final String baseDir,
             @CliOption(key = {"playlistName"}, help = "The name of the playlist.", specifiedDefaultValue = DEFAULT_PLAYLIST_NAME,
                     unspecifiedDefaultValue = DEFAULT_PLAYLIST_NAME) final String playlistName,
-            @CliOption(key = {"sortByTrackNumber"}, help = "Sorts by ID-Tag track number if available.", specifiedDefaultValue = "false",
+            @CliOption(key = {"sortByTrackNumber"}, help = "Sorts by ID-Tag track number if available.", specifiedDefaultValue = "true",
                     unspecifiedDefaultValue = "false") final Boolean sortByTrackNumber) {
 
         LOG.debug("createOnePlaylistForAll: baseDir={}, playlistName={}", baseDir, playlistName);
@@ -51,7 +51,7 @@ public class M3UGeneratorCommands implements CommandMarker {
     public void createPlaylistsForEachDirectory(
             @CliOption(key = {"basedir"}, mandatory = true, help = "The directory where to scan files for the M3U playlist.") final String baseDir,
             @CliOption(key = {"sortByTrackNumber"}, help = "Sorts by ID-Tag track number if available.",
-                    specifiedDefaultValue = "false", unspecifiedDefaultValue = "false") final Boolean sortByTrackNumber) {
+                    specifiedDefaultValue = "true", unspecifiedDefaultValue = "false") final Boolean sortByTrackNumber) {
         LOG.debug("createPlaylistsForEachDirectory: baseDir={}", baseDir);
 
         try {

@@ -32,8 +32,9 @@ public class M3UPlaylistGenerator implements PlaylistGenerator {
         final File baseDirFile = new File(baseDir);
         checkIfDirectoryExists(baseDirFile);
 
-        DirectoryWalker directoryWalker = new DirectoryWalker(baseDirFile);
         FileSorter fileSorter = selectFileSorter(sortByTrackNumber);
+
+        DirectoryWalker directoryWalker = new DirectoryWalker(baseDirFile);
         PlaylistDirectoryListener listener = new PlaylistDirectoryListener(fileSorter);
         directoryWalker.registerListener(listener);
         directoryWalker.scanDir(baseDirFile);
@@ -47,9 +48,9 @@ public class M3UPlaylistGenerator implements PlaylistGenerator {
 
         File[] dirs = baseDirFile.listFiles(file -> file.isDirectory());
 
+        FileSorter fileSorter = selectFileSorter(sortByTrackNumber);
         for (File dir : dirs) {
             DirectoryWalker directoryWalker = new DirectoryWalker(baseDirFile);
-            FileSorter fileSorter = selectFileSorter(sortByTrackNumber);
             PlaylistDirectoryListener listener = new PlaylistDirectoryListener(fileSorter);
             directoryWalker.registerListener(listener);
             directoryWalker.scanDir(dir);

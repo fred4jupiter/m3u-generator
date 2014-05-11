@@ -25,7 +25,8 @@ public class ManualPlaylistGeneratorTest {
 
     @Test
     public void generatePlaylistForEachDir() throws IOException {
-        final String baseDir = "e:/Mike Oldfield";
+        //final String baseDir = "e:/Mike Oldfield";
+        final String baseDir = "e:/";
 
         playlistGenerator.createPlaylistsForEachDirectory(baseDir, true);
     }
