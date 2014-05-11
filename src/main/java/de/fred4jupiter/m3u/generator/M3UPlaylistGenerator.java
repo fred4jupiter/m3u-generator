@@ -2,10 +2,11 @@ package de.fred4jupiter.m3u.generator;
 
 import de.fred4jupiter.m3u.PlaylistCreationException;
 import de.fred4jupiter.m3u.generator.sorting.FileSorter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,16 +17,28 @@ import java.io.IOException;
 @Component
 public class M3UPlaylistGenerator implements PlaylistGenerator {
 
+    private static final Logger LOG = LoggerFactory.getLogger(M3UPlaylistGenerator.class);
+
     @Autowired
     @Qualifier("trackNumberFileSorter")
-    private FileSorter fileSorter;
+    private FileSorter trackNumberSorter;
+
+    @Autowired
+    @Qualifier("fileNameFileSorter")
+    private FileSorter fileNameSorter;
 
     @Override
-    public void createOnePlaylistForAll(String baseDir, String playlistName) throws IOException {
+    public void createOnePlaylistForAll(String baseDir, String playlistName, boolean sortByTrackNumber) throws IOException {
         final File baseDirFile = new File(baseDir);
         checkIfDirectoryExists(baseDirFile);
 
+        createPlaylist(playlistName, sortByTrackNumber, baseDirFile);
+    }
+
+    private void createPlaylist(String playlistName, boolean sortByTrackNumber, File baseDirFile) throws IOException {
         DirectoryWalker directoryWalker = new DirectoryWalker(baseDirFile);
+        FileSorter fileSorter = sortByTrackNumber ? trackNumberSorter : fileNameSorter;
+        LOG.info("createPlaylist: using sorter: " + fileSorter.getClass().getName());
         PlaylistDirectoryListener listener = new PlaylistDirectoryListener(fileSorter);
         directoryWalker.registerListener(listener);
         directoryWalker.scanDir(baseDirFile);
@@ -33,18 +46,15 @@ public class M3UPlaylistGenerator implements PlaylistGenerator {
     }
 
     @Override
-    public void createPlaylistsForEachDirectory(String baseDir) throws IOException {
+    public void createPlaylistsForEachDirectory(String baseDir, boolean sortByTrackNumber) throws IOException {
         final File baseDirFile = new File(baseDir);
         checkIfDirectoryExists(baseDirFile);
 
         File[] dirs = baseDirFile.listFiles(file -> file.isDirectory());
 
         for (File dir : dirs) {
-            DirectoryWalker directoryWalker = new DirectoryWalker(baseDirFile);
-            PlaylistDirectoryListener listener = new PlaylistDirectoryListener(fileSorter);
-            directoryWalker.registerListener(listener);
-            directoryWalker.scanDir(dir);
-            listener.writePlaylistToFile(baseDirFile, dir.getName() + FileConstants.M3U_PLAYLIST_FILE_EXTENSION);
+            String playlistName = dir.getName() + FileConstants.M3U_PLAYLIST_FILE_EXTENSION;
+            createPlaylist(playlistName, sortByTrackNumber, baseDirFile);
         }
     }
 

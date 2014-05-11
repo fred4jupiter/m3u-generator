@@ -14,7 +14,7 @@ public interface PlaylistGenerator {
      * @param playlistName name of the playlist that will be generated.
      * @throws IOException in case the path does not exists.
      */
-    void createOnePlaylistForAll(String baseDir, String playlistName) throws IOException;
+    void createOnePlaylistForAll(String baseDir, String playlistName, boolean sortByTrackNumber) throws IOException;
 
     /**
      * Generates playlists of each direct descendant of given baseDir.
@@ -22,5 +22,5 @@ public interface PlaylistGenerator {
      * @param baseDir The base directoy path. All subdirectories will be scanned for MP3 files.
      * @throws IOException in case the path does not exists.
      */
-    void createPlaylistsForEachDirectory(String baseDir) throws IOException;
+    void createPlaylistsForEachDirectory(String baseDir, boolean sortByTrackNumber) throws IOException;
 }

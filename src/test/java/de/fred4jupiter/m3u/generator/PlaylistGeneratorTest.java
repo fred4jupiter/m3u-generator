@@ -28,7 +28,7 @@ public class PlaylistGeneratorTest {
     public void generateOnePlaylistForAll() throws IOException {
         final String playlistName = "Playlist.m3u";
 
-        playlistGenerator.createOnePlaylistForAll(BASE_DIR, playlistName);
+        playlistGenerator.createOnePlaylistForAll(BASE_DIR, playlistName, false);
         File generatedPlaylistFile = new File(BASE_DIR + File.separator + playlistName);
         assertThat(generatedPlaylistFile.exists(), equalTo(true));
         String playlistContent = FileUtils.read(generatedPlaylistFile);
@@ -39,7 +39,7 @@ public class PlaylistGeneratorTest {
 
     @Test
     public void generatePlaylistsForEachDirectory() throws IOException {
-        playlistGenerator.createPlaylistsForEachDirectory(BASE_DIR);
+        playlistGenerator.createPlaylistsForEachDirectory(BASE_DIR, false);
 
         checkPlaylist("genesis.m3u", "genesis" + File.separator + "song1.mp3");
         checkPlaylist("nirvana.m3u", "nirvana" + File.separator + "song2.mp3");

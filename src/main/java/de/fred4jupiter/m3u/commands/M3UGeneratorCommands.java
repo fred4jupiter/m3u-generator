@@ -1,7 +1,6 @@
 package de.fred4jupiter.m3u.commands;
 
 import de.fred4jupiter.m3u.generator.PlaylistGenerator;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,25 +34,28 @@ public class M3UGeneratorCommands implements CommandMarker {
     @CliCommand(value = "m3u oneForAll", help = "Generates one playlist for a given base directory")
     public void createOnePlaylistForAll(
             @CliOption(key = {"basedir"}, mandatory = true, help = "The directory where to scan files for the M3U playlist.") final String baseDir,
-            @CliOption(key = {"playlistName"}, mandatory = false, help = "The name of the playlist",
-                    specifiedDefaultValue = DEFAULT_PLAYLIST_NAME) final String playlistName) {
+            @CliOption(key = {"playlistName"}, help = "The name of the playlist.", specifiedDefaultValue = DEFAULT_PLAYLIST_NAME,
+                    unspecifiedDefaultValue = DEFAULT_PLAYLIST_NAME) final String playlistName,
+            @CliOption(key = {"sortByTrackNumber"}, help = "Sorts by ID-Tag track number if available.", specifiedDefaultValue = "false",
+                    unspecifiedDefaultValue = "false") final Boolean sortByTrackNumber) {
 
-        final String usedPlaylistName = StringUtils.isBlank(playlistName) ? DEFAULT_PLAYLIST_NAME : playlistName;
-
-        LOG.debug("createOnePlaylistForAll: baseDir={}, playlistName={}", baseDir, usedPlaylistName);
+        LOG.debug("createOnePlaylistForAll: baseDir={}, playlistName={}", baseDir, playlistName);
         try {
-            this.playlistGenerator.createOnePlaylistForAll(baseDir, usedPlaylistName);
+            this.playlistGenerator.createOnePlaylistForAll(baseDir, playlistName, sortByTrackNumber);
         } catch (IOException e) {
             LOG.error(e.getMessage(), e);
         }
     }
 
     @CliCommand(value = "m3u forEachDirLevelOne", help = "Generates playlists for each subdirectory one first level hierarchy")
-    public void createPlaylistsForEachDirectory(@CliOption(key = {"basedir"},
-            mandatory = true, help = "The directory where to scan files for the M3U playlist.") final String baseDir) {
+    public void createPlaylistsForEachDirectory(
+            @CliOption(key = {"basedir"}, mandatory = true, help = "The directory where to scan files for the M3U playlist.") final String baseDir,
+            @CliOption(key = {"sortByTrackNumber"}, help = "Sorts by ID-Tag track number if available.",
+                    specifiedDefaultValue = "false", unspecifiedDefaultValue = "false") final Boolean sortByTrackNumber) {
         LOG.debug("createPlaylistsForEachDirectory: baseDir={}", baseDir);
+
         try {
-            this.playlistGenerator.createPlaylistsForEachDirectory(baseDir);
+            this.playlistGenerator.createPlaylistsForEachDirectory(baseDir, sortByTrackNumber);
         } catch (IOException e) {
             LOG.error(e.getMessage(), e);
         }
