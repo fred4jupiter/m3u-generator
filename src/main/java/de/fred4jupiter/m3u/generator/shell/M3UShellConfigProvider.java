@@ -1,4 +1,4 @@
-package de.fred4jupiter.m3u;
+package de.fred4jupiter.m3u.generator.shell;
 
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;

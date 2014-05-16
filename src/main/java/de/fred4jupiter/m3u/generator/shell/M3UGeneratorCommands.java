@@ -1,4 +1,4 @@
-package de.fred4jupiter.m3u.commands;
+package de.fred4jupiter.m3u.generator.shell;
 
 import de.fred4jupiter.m3u.generator.PlaylistGenerator;
 import org.slf4j.Logger;

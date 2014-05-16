@@ -1,12 +1,14 @@
-package de.fred4jupiter.m3u.generator;
+package de.fred4jupiter.m3u.generator.scanning;
 
+import de.fred4jupiter.m3u.generator.playlisting.DirectoryListener;
+import org.hamcrest.Matchers;
+import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
 
-import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
@@ -18,17 +20,17 @@ public class DirectoryWalkerTest {
     public void scanDir() {
         final File baseDir = new File("src/test/resources/mp3DummyFolder");
 
-        DirectoryWalker directoryWalker = new DirectoryWalker(baseDir);
+        DefaultDirectoryWalker defaultDirectoryWalker = new DefaultDirectoryWalker(baseDir);
         AssertingDirectoryListener assertingDirectoryListener = new AssertingDirectoryListener();
-        directoryWalker.registerListener(assertingDirectoryListener);
+        defaultDirectoryWalker.registerListener(assertingDirectoryListener);
 
-        directoryWalker.scanDir(baseDir);
+        defaultDirectoryWalker.scanDir(baseDir);
 
         String content = assertingDirectoryListener.getContent();
-        assertThat(content, notNullValue());
+        Assert.assertThat(content, Matchers.notNullValue());
         LOG.debug(content);
-        assertThat(content, containsString("genesis"));
-        assertThat(content, containsString("nirvana"));
+        Assert.assertThat(content, Matchers.containsString("genesis"));
+        Assert.assertThat(content, Matchers.containsString("nirvana"));
     }
 
     private static final class AssertingDirectoryListener implements DirectoryListener {

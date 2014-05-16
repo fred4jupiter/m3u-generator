@@ -1,6 +1,8 @@
 package de.fred4jupiter.m3u.generator;
 
-import de.fred4jupiter.m3u.PlaylistCreationException;
+import de.fred4jupiter.m3u.generator.playlisting.PlaylistDirectoryListener;
+import de.fred4jupiter.m3u.generator.scanning.DefaultDirectoryWalker;
+import de.fred4jupiter.m3u.generator.scanning.DirectoryWalker;
 import de.fred4jupiter.m3u.generator.sorting.FileSorter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +36,7 @@ public class M3UPlaylistGenerator implements PlaylistGenerator {
 
         FileSorter fileSorter = selectFileSorter(sortByTrackNumber);
 
-        DirectoryWalker directoryWalker = new DirectoryWalker(baseDirFile);
+        DirectoryWalker directoryWalker = new DefaultDirectoryWalker(baseDirFile);
         PlaylistDirectoryListener listener = new PlaylistDirectoryListener(fileSorter);
         directoryWalker.registerListener(listener);
         directoryWalker.scanDir(baseDirFile);
@@ -50,7 +52,7 @@ public class M3UPlaylistGenerator implements PlaylistGenerator {
 
         FileSorter fileSorter = selectFileSorter(sortByTrackNumber);
         for (File dir : dirs) {
-            DirectoryWalker directoryWalker = new DirectoryWalker(baseDirFile);
+            DirectoryWalker directoryWalker = new DefaultDirectoryWalker(baseDirFile);
             PlaylistDirectoryListener listener = new PlaylistDirectoryListener(fileSorter);
             directoryWalker.registerListener(listener);
             directoryWalker.scanDir(dir);

@@ -1,5 +1,6 @@
-package de.fred4jupiter.m3u.generator;
+package de.fred4jupiter.m3u.generator.playlisting;
 
+import de.fred4jupiter.m3u.generator.FileConstants;
 import de.fred4jupiter.m3u.generator.sorting.FileSorter;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;

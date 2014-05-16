@@ -1,6 +1,6 @@
-package de.fred4jupiter.m3u.generator;
+package de.fred4jupiter.m3u.generator.scanning;
 
-import de.fred4jupiter.m3u.generator.sorting.FileSorter;
+import de.fred4jupiter.m3u.generator.playlisting.DirectoryListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,17 +15,18 @@ import java.util.List;
 /**
  * Helper class traversing the directory tree.
  */
-public class DirectoryWalker {
+public class DefaultDirectoryWalker implements DirectoryWalker {
 
-    private static final Logger LOG = LoggerFactory.getLogger(DirectoryWalker.class);
+    private static final Logger LOG = LoggerFactory.getLogger(DefaultDirectoryWalker.class);
 
     private List<DirectoryListener> listeners = new ArrayList<>();
     private final File directoryWritingPlaylistTo;
 
-    public DirectoryWalker(File directoryWritingPlaylistTo) {
+    public DefaultDirectoryWalker(File directoryWritingPlaylistTo) {
         this.directoryWritingPlaylistTo = directoryWritingPlaylistTo;
     }
 
+    @Override
     public void scanDir(final File baseDir) {
         scanDir(baseDir, baseDir);
     }
