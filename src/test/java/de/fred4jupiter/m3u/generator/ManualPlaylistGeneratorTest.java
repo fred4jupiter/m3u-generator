@@ -21,9 +21,7 @@ public class ManualPlaylistGeneratorTest {
         //final String baseDir = "e:/Mike Oldfield";
         final String baseDir = "m:/Musik/30SecondsToMars";
 
-        final String playlistName = "PlayAllPlaylist.m3u";
-
-        playlistGenerator.createOnePlaylistForAll(baseDir, playlistName, sortByTrackNumber);
+        playlistGenerator.createOnePlaylistForAll(baseDir, sortByTrackNumber);
     }
 
     @Test

@@ -33,6 +33,11 @@ public class M3UPlaylistGenerator implements PlaylistGenerator {
     private FileSorter fileNameSorter;
 
     @Override
+    public void createOnePlaylistForAll(String baseDir, boolean sortByTrackNumber) throws IOException {
+        createOnePlaylistForAll(baseDir, Constants.DEFAULT_PLAYLIST_NAME, sortByTrackNumber);
+    }
+
+    @Override
     public void createOnePlaylistForAll(String baseDir, String playlistName, boolean sortByTrackNumber) throws IOException {
         final File baseDirFile = new File(baseDir);
         checkIfDirectoryExists(baseDirFile);

@@ -1,5 +1,6 @@
 package de.fred4jupiter.m3u.generator.shell;
 
+import de.fred4jupiter.m3u.generator.Constants;
 import de.fred4jupiter.m3u.generator.PlaylistGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,8 +21,6 @@ public class M3UGeneratorCommands implements CommandMarker {
 
     private static final Logger LOG = LoggerFactory.getLogger(M3UGeneratorCommands.class);
 
-    public static final String DEFAULT_PLAYLIST_NAME = "PlayAllPlaylist.m3u";
-
     @Autowired
     private PlaylistGenerator playlistGenerator;
 
@@ -34,8 +33,8 @@ public class M3UGeneratorCommands implements CommandMarker {
     @CliCommand(value = "m3u oneForAll", help = "Generates one playlist for a given base directory")
     public void createOnePlaylistForAll(
             @CliOption(key = {"basedir"}, mandatory = true, help = "The directory where to scan files for the M3U playlist.") final String baseDir,
-            @CliOption(key = {"playlistName"}, help = "The name of the playlist.", specifiedDefaultValue = DEFAULT_PLAYLIST_NAME,
-                    unspecifiedDefaultValue = DEFAULT_PLAYLIST_NAME) final String playlistName,
+            @CliOption(key = {"playlistName"}, help = "The name of the playlist.", specifiedDefaultValue = Constants.DEFAULT_PLAYLIST_NAME,
+                    unspecifiedDefaultValue = Constants.DEFAULT_PLAYLIST_NAME) final String playlistName,
             @CliOption(key = {"sortByTrackNumber"}, help = "Sorts by ID-Tag track number if available.", specifiedDefaultValue = "true",
                     unspecifiedDefaultValue = "false") final Boolean sortByTrackNumber) {
 

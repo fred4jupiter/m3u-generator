@@ -1,6 +1,6 @@
 package de.fred4jupiter.m3u.generator.playlisting;
 
-import de.fred4jupiter.m3u.generator.FileConstants;
+import de.fred4jupiter.m3u.generator.Constants;
 import de.fred4jupiter.m3u.generator.sorting.FileSorter;
 import org.apache.commons.lang3.StringUtils;
 
@@ -26,7 +26,7 @@ public class PlaylistDirectoryListener implements DirectoryListener {
 
     @Override
     public void onEnterDirectory(File dir, String relativeDirectoryPrefix, int depth) {
-        File[] files = dir.listFiles(file -> file.isFile() && file.getName().endsWith(FileConstants.MP3_FILE_EXTENSION));
+        File[] files = dir.listFiles(file -> file.isFile() && file.getName().endsWith(Constants.MP3_FILE_EXTENSION));
 
         fileSorter.sortFiles(files);
 
