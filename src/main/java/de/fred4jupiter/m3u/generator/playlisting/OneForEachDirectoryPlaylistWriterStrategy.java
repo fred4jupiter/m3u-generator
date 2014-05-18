@@ -1,6 +1,6 @@
 package de.fred4jupiter.m3u.generator.playlisting;
 
-import de.fred4jupiter.m3u.generator.FileConstants;
+import de.fred4jupiter.m3u.generator.Constants;
 
 import java.io.File;
 
@@ -14,7 +14,7 @@ public class OneForEachDirectoryPlaylistWriterStrategy implements PlaylistWriter
 
     @Override
     public void afterDirectory(File dir, String content) {
-        String playlistName = dir.getName() + FileConstants.M3U_PLAYLIST_FILE_EXTENSION;
+        String playlistName = dir.getName() + Constants.M3U_PLAYLIST_FILE_EXTENSION;
         ContentToFileWriter.writePlaylistToFile(content, baseDirFile, playlistName);
     }
 
