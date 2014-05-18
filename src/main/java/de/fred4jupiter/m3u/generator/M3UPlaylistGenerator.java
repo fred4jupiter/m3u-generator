@@ -1,6 +1,9 @@
 package de.fred4jupiter.m3u.generator;
 
+import de.fred4jupiter.m3u.generator.playlisting.OneForAllPlaylistWriterStrategy;
+import de.fred4jupiter.m3u.generator.playlisting.OneForEachDirectoryPlaylistWriterStrategy;
 import de.fred4jupiter.m3u.generator.playlisting.PlaylistDirectoryListener;
+import de.fred4jupiter.m3u.generator.playlisting.PlaylistWriterStrategy;
 import de.fred4jupiter.m3u.generator.scanning.DefaultDirectoryWalker;
 import de.fred4jupiter.m3u.generator.scanning.DirectoryWalker;
 import de.fred4jupiter.m3u.generator.sorting.FileSorter;
@@ -34,13 +37,18 @@ public class M3UPlaylistGenerator implements PlaylistGenerator {
         final File baseDirFile = new File(baseDir);
         checkIfDirectoryExists(baseDirFile);
 
-        FileSorter fileSorter = selectFileSorter(sortByTrackNumber);
+        DirectoryWalker directoryWalker = createDirectoryWalker(baseDirFile);
 
-        DirectoryWalker directoryWalker = new DefaultDirectoryWalker(baseDirFile);
-        PlaylistDirectoryListener listener = new PlaylistDirectoryListener(fileSorter);
+        FileSorter fileSorter = selectFileSorter(sortByTrackNumber);
+        PlaylistWriterStrategy playlistWriterStrategy = new OneForAllPlaylistWriterStrategy(baseDirFile, playlistName);
+        PlaylistDirectoryListener listener = new PlaylistDirectoryListener(fileSorter, playlistWriterStrategy);
         directoryWalker.registerListener(listener);
+
         directoryWalker.scanDir(baseDirFile);
-        listener.writePlaylistToFile(baseDirFile, playlistName);
+    }
+
+    private DirectoryWalker createDirectoryWalker(File baseDirFile) {
+        return new DefaultDirectoryWalker(baseDirFile);
     }
 
     @Override
@@ -52,11 +60,12 @@ public class M3UPlaylistGenerator implements PlaylistGenerator {
 
         FileSorter fileSorter = selectFileSorter(sortByTrackNumber);
         for (File dir : dirs) {
-            DirectoryWalker directoryWalker = new DefaultDirectoryWalker(baseDirFile);
-            PlaylistDirectoryListener listener = new PlaylistDirectoryListener(fileSorter);
+            DirectoryWalker directoryWalker = createDirectoryWalker(baseDirFile);
+            PlaylistWriterStrategy playlistWriterStrategy = new OneForEachDirectoryPlaylistWriterStrategy(baseDirFile);
+            PlaylistDirectoryListener listener = new PlaylistDirectoryListener(fileSorter, playlistWriterStrategy);
             directoryWalker.registerListener(listener);
+
             directoryWalker.scanDir(dir);
-            listener.writePlaylistToFile(baseDirFile, dir.getName() + FileConstants.M3U_PLAYLIST_FILE_EXTENSION);
         }
     }
 

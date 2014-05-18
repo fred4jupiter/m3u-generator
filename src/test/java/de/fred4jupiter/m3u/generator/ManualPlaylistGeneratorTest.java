@@ -17,17 +17,22 @@ public class ManualPlaylistGeneratorTest {
 
     @Test
     public void generateOnePlaylistForAll() throws IOException {
-        final String baseDir = "e:/Mike Oldfield";
+        final boolean sortByTrackNumber = false;
+        //final String baseDir = "e:/Mike Oldfield";
+        final String baseDir = "m:/Musik/30SecondsToMars";
+
         final String playlistName = "Playlist.m3u";
 
-        playlistGenerator.createOnePlaylistForAll(baseDir, playlistName, false);
+        playlistGenerator.createOnePlaylistForAll(baseDir, playlistName, sortByTrackNumber);
     }
 
     @Test
     public void generatePlaylistForEachDir() throws IOException {
-        //final String baseDir = "e:/Mike Oldfield";
-        final String baseDir = "d:/Temp2";
+        final boolean sortByTrackNumber = false;
 
-        playlistGenerator.createPlaylistsForEachDirectory(baseDir, true);
+        final String baseDir = "m:/Musik/30SecondsToMars";
+        //final String baseDir = "d:/Temp2";
+
+        playlistGenerator.createPlaylistsForEachDirectory(baseDir, sortByTrackNumber);
     }
 }

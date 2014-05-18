@@ -9,9 +9,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 
-import static org.hamcrest.Matchers.notNullValue;
-import static org.junit.Assert.assertThat;
-
 public class DirectoryWalkerTest {
 
     private static final Logger LOG = LoggerFactory.getLogger(DirectoryWalkerTest.class);
@@ -20,7 +17,7 @@ public class DirectoryWalkerTest {
     public void scanDir() {
         final File baseDir = new File("src/test/resources/mp3DummyFolder");
 
-        DefaultDirectoryWalker defaultDirectoryWalker = new DefaultDirectoryWalker(baseDir);
+        DirectoryWalker defaultDirectoryWalker = new DefaultDirectoryWalker(baseDir);
         AssertingDirectoryListener assertingDirectoryListener = new AssertingDirectoryListener();
         defaultDirectoryWalker.registerListener(assertingDirectoryListener);
 
@@ -40,6 +37,11 @@ public class DirectoryWalkerTest {
         public void onEnterDirectory(File dir, String relativeDirectoryPrefix, int depth) {
             stringBuilder.append(relativeDirectoryPrefix);
             stringBuilder.append("\n");
+        }
+
+        @Override
+        public void onScanFinished(File baseDir) {
+
         }
 
         public String getContent() {

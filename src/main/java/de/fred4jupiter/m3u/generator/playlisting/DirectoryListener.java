@@ -14,4 +14,6 @@ public interface DirectoryListener {
      * @param depth directoy depth beginning at index 0 on base dir.
      */
     void onEnterDirectory(File dir, String relativeDirectoryPrefix, int depth);
+
+    void onScanFinished(File baseDir);
 }

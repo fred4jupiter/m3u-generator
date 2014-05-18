@@ -50,6 +50,14 @@ public class DefaultDirectoryWalker implements DirectoryWalker {
                 scanDir(baseDir, directory);
             }
         }
+
+        notifiyOnScanFinished(baseDir);
+    }
+
+    private void notifiyOnScanFinished(File baseDir) {
+        for (DirectoryListener listener : listeners) {
+            listener.onScanFinished(baseDir);
+        }
     }
 
     private String calculateRelativePath(Path dirPath, int depth) {
