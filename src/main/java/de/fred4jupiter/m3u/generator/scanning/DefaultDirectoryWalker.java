@@ -29,6 +29,7 @@ public class DefaultDirectoryWalker implements DirectoryWalker {
     @Override
     public void scanDir(final File baseDir) {
         scanDir(baseDir, baseDir);
+        notifiyOnScanFinished(baseDir);
     }
 
     private void scanDir(final File baseDir, final File dir) {
@@ -50,8 +51,6 @@ public class DefaultDirectoryWalker implements DirectoryWalker {
                 scanDir(baseDir, directory);
             }
         }
-
-        notifiyOnScanFinished(baseDir);
     }
 
     private void notifiyOnScanFinished(File baseDir) {
