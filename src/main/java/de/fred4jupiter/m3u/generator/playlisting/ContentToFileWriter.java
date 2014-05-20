@@ -2,6 +2,7 @@ package de.fred4jupiter.m3u.generator.playlisting;
 
 import de.fred4jupiter.m3u.generator.Constants;
 import de.fred4jupiter.m3u.generator.PlaylistCreationException;
+import de.fred4jupiter.m3u.generator.PlaylistFile;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -15,6 +16,8 @@ public final class ContentToFileWriter {
 
     private static final Logger LOG = LoggerFactory.getLogger(ContentToFileWriter.class);
 
+    private static PlaylistFile playlistFile = PlaylistFile.M3U;
+
     private ContentToFileWriter() {
         // avoid instance creation
     }
@@ -27,9 +30,10 @@ public final class ContentToFileWriter {
                 return null;
             }
 
-            File file = new File(baseDirFile.getAbsolutePath() + File.separator + playlistName);
+            String fileName = playlistName + playlistFile.getFileExtension();
+            File file = new File(baseDirFile.getAbsolutePath() + File.separator + fileName);
             LOG.info("writing playlist file: {}", file.getCanonicalFile());
-            FileUtils.writeStringToFile(file, content, Constants.FILE_ENCODING);
+            FileUtils.writeStringToFile(file, content, playlistFile.getEncoding());
             return file;
         } catch (IOException e) {
             throw new PlaylistCreationException(e.getMessage(), e);

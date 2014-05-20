@@ -14,8 +14,7 @@ public class OneForEachDirectoryPlaylistWriterStrategy implements PlaylistWriter
 
     @Override
     public void afterDirectory(File dir, String content) {
-        String playlistName = dir.getName() + Constants.M3U_PLAYLIST_FILE_EXTENSION;
-        ContentToFileWriter.writePlaylistToFile(content, baseDirFile, playlistName);
+        ContentToFileWriter.writePlaylistToFile(content, baseDirFile, dir.getName());
     }
 
     @Override
