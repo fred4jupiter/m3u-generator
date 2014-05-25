@@ -26,10 +26,10 @@ public class PlaylistGeneratorTest {
 
     @Test
     public void generateOnePlaylistForAll() throws IOException {
-        final String playlistName = "Playlist.m3u";
+        final String playlistName = "Playlist";
 
         playlistGenerator.createOnePlaylistForAll(BASE_DIR, playlistName, false);
-        File generatedPlaylistFile = new File(BASE_DIR + File.separator + playlistName);
+        File generatedPlaylistFile = new File(BASE_DIR + File.separator + playlistName + PlaylistFile.M3U.getFileExtension());
         assertThat(generatedPlaylistFile.exists(), equalTo(true));
         String playlistContent = FileUtils.read(generatedPlaylistFile);
         assertNotNull(playlistContent);
