@@ -1,9 +1,10 @@
-package de.fred4jupiter.m3u.generator.sorting;
+package de.fred4jupiter.m3u.generator.sorting.impl;
 
 import com.mpatric.mp3agic.InvalidDataException;
 import com.mpatric.mp3agic.Mp3File;
 import com.mpatric.mp3agic.UnsupportedTagException;
 import de.fred4jupiter.m3u.generator.service.PlaylistCreationException;
+import de.fred4jupiter.m3u.generator.sorting.FileSorter;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

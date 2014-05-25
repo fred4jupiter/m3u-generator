@@ -1,5 +1,6 @@
-package de.fred4jupiter.m3u.generator.sorting;
+package de.fred4jupiter.m3u.generator.sorting.impl;
 
+import de.fred4jupiter.m3u.generator.sorting.FileSorter;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
