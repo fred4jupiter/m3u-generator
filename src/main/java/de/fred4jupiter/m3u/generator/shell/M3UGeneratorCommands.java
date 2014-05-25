@@ -1,10 +1,11 @@
 package de.fred4jupiter.m3u.generator.shell;
 
 import de.fred4jupiter.m3u.generator.Constants;
-import de.fred4jupiter.m3u.generator.PlaylistGenerator;
+import de.fred4jupiter.m3u.generator.service.PlaylistGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.shell.core.CommandMarker;
 import org.springframework.shell.core.annotation.CliAvailabilityIndicator;
 import org.springframework.shell.core.annotation.CliCommand;
@@ -22,6 +23,7 @@ public class M3UGeneratorCommands implements CommandMarker {
     private static final Logger LOG = LoggerFactory.getLogger(M3UGeneratorCommands.class);
 
     @Autowired
+    @Qualifier("m3uPlaylistGenerator")
     private PlaylistGenerator playlistGenerator;
 
     @CliAvailabilityIndicator({"m3u oneForAll", "m3u forEachDirLevelOne"})

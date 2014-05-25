@@ -5,9 +5,6 @@ import org.junit.Test;
 
 import java.io.File;
 
-/**
- * Created by michael on 16.05.2014.
- */
 public class TreeWalkingDirectoyWalkerTest {
 
     @Test
@@ -15,6 +12,5 @@ public class TreeWalkingDirectoyWalkerTest {
         final String baseDir = "d:/Temp2";
         TreeWalkingDirectoyWalker walker = new TreeWalkingDirectoyWalker();
         walker.scanDir(new File(baseDir));
-
     }
 }

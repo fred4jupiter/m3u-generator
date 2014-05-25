@@ -8,9 +8,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-/**
- * Created by michael on 16.05.2014.
- */
 public class TreeWalkingDirectoyWalker implements DirectoryWalker {
 
     @Override

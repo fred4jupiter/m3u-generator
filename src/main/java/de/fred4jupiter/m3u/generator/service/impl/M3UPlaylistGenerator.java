@@ -1,11 +1,15 @@
-package de.fred4jupiter.m3u.generator;
+package de.fred4jupiter.m3u.generator.service.impl;
 
+import de.fred4jupiter.m3u.generator.Constants;
+import de.fred4jupiter.m3u.generator.service.GeneratorOptions;
+import de.fred4jupiter.m3u.generator.service.PlaylistCreationException;
 import de.fred4jupiter.m3u.generator.playlisting.OneForAllPlaylistWriterStrategy;
 import de.fred4jupiter.m3u.generator.playlisting.OneForEachDirectoryPlaylistWriterStrategy;
 import de.fred4jupiter.m3u.generator.playlisting.PlaylistDirectoryListener;
 import de.fred4jupiter.m3u.generator.playlisting.PlaylistWriterStrategy;
 import de.fred4jupiter.m3u.generator.scanning.DefaultDirectoryWalker;
 import de.fred4jupiter.m3u.generator.scanning.DirectoryWalker;
+import de.fred4jupiter.m3u.generator.service.PlaylistGenerator;
 import de.fred4jupiter.m3u.generator.sorting.FileSorter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +24,7 @@ import java.io.IOException;
  * PlaylistGenerator for M3U playlists.
  */
 @Component
+@Qualifier("m3uPlaylistGenerator")
 public class M3UPlaylistGenerator implements PlaylistGenerator {
 
     private static final Logger LOG = LoggerFactory.getLogger(M3UPlaylistGenerator.class);
@@ -72,6 +77,11 @@ public class M3UPlaylistGenerator implements PlaylistGenerator {
 
             directoryWalker.scanDir(dir);
         }
+    }
+
+    @Override
+    public void createPlaylist(GeneratorOptions generatorOptions) {
+
     }
 
     private FileSorter selectFileSorter(boolean sortByTrackNumber) {

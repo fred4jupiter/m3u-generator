@@ -1,8 +1,7 @@
 package de.fred4jupiter.m3u.generator.playlisting;
 
-import de.fred4jupiter.m3u.generator.Constants;
-import de.fred4jupiter.m3u.generator.PlaylistCreationException;
 import de.fred4jupiter.m3u.generator.PlaylistFile;
+import de.fred4jupiter.m3u.generator.service.PlaylistCreationException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -16,13 +15,15 @@ public final class ContentToFileWriter {
 
     private static final Logger LOG = LoggerFactory.getLogger(ContentToFileWriter.class);
 
-    private static PlaylistFile playlistFile = PlaylistFile.M3U;
-
     private ContentToFileWriter() {
         // avoid instance creation
     }
 
     public static File writePlaylistToFile(String content, File baseDirFile, String playlistName) {
+        return writePlaylistToFile(content, baseDirFile, playlistName, PlaylistFile.M3U);
+    }
+
+    public static File writePlaylistToFile(String content, File baseDirFile, String playlistName, PlaylistFile playlistFile) {
         Assert.notNull(playlistName, "playlistName must not be null");
         try {
             if (StringUtils.isBlank(content)) {

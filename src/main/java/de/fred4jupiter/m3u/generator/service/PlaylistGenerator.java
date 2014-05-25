@@ -1,4 +1,4 @@
-package de.fred4jupiter.m3u.generator;
+package de.fred4jupiter.m3u.generator.service;
 
 import java.io.IOException;
 
@@ -31,4 +31,6 @@ public interface PlaylistGenerator {
      * @throws IOException in case the path does not exists.
      */
     void createPlaylistsForEachDirectory(String baseDir, boolean sortByTrackNumber) throws IOException;
+
+    void createPlaylist(GeneratorOptions generatorOptions);
 }
