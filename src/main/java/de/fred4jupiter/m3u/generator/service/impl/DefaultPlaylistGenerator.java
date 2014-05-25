@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 
 @Component
-public class TreeWalkingPlaylistGenerator implements PlaylistGenerator {
+public class DefaultPlaylistGenerator implements PlaylistGenerator {
 
     @Autowired
     @Qualifier("trackNumberFileSorter")
