@@ -17,7 +17,7 @@ public class ManualPlaylistGeneratorTest {
     public void createPlaylistLeveOneForAll() {
         final String baseDir = "d:/Temp3";
 
-        GeneratorOptions generatorOptions = new GeneratorOptions(baseDir, GeneratorOptions.PlaylistLevel.ONE_FOR_ALL);
+        GeneratorOptions generatorOptions = new GeneratorOptions(baseDir, GeneratorOptions.PlaylistType.ONE_FOR_ALL);
         playlistGenerator.createPlaylist(generatorOptions);
     }
 
@@ -25,7 +25,7 @@ public class ManualPlaylistGeneratorTest {
     public void createPlaylistLevelForArtists() {
         final String baseDir = "d:/Temp3";
 
-        GeneratorOptions generatorOptions = new GeneratorOptions(baseDir, GeneratorOptions.PlaylistLevel.EVERY_ARTIST);
+        GeneratorOptions generatorOptions = new GeneratorOptions(baseDir, GeneratorOptions.PlaylistType.EVERY_ARTIST);
         playlistGenerator.createPlaylist(generatorOptions);
     }
 
@@ -33,7 +33,7 @@ public class ManualPlaylistGeneratorTest {
     public void createPlaylistLevelForEachArtistAndAlbum() {
         final String baseDir = "d:/Temp3";
 
-        GeneratorOptions generatorOptions = new GeneratorOptions(baseDir, GeneratorOptions.PlaylistLevel.EVERY_ARTIST_ALBUM);
+        GeneratorOptions generatorOptions = new GeneratorOptions(baseDir, GeneratorOptions.PlaylistType.EVERY_ARTIST_ALBUM);
         playlistGenerator.createPlaylist(generatorOptions);
     }
 }

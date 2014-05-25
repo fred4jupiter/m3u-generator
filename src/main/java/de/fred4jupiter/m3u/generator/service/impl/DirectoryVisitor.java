@@ -48,7 +48,7 @@ public class DirectoryVisitor extends SimpleFileVisitor<Path> {
 
         String playlistName = determinePlaylistName(dir, currentLevel);
 
-        if (generatorOptions.getPlaylistLevel().getLevel() >= currentLevel) {
+        if (generatorOptions.getPlaylistType().getType() >= currentLevel) {
             fileContentCollector.writeContentToPlaylistFile(playlistName);
         }
     }
@@ -56,17 +56,17 @@ public class DirectoryVisitor extends SimpleFileVisitor<Path> {
     private String determinePlaylistName(Path dir, int currentLevel) {
         String playlistName = null;
 
-        if (currentLevel == GeneratorOptions.PlaylistLevel.EVERY_ARTIST_ALBUM.getLevel()) {
+        if (currentLevel == GeneratorOptions.PlaylistType.EVERY_ARTIST_ALBUM.getType()) {
             String album = dir.getFileName().toString();
             String artist = dir.getParent().getFileName().toString();
             playlistName = artist + " - " + album;
         }
 
-        if (currentLevel == GeneratorOptions.PlaylistLevel.EVERY_ARTIST.getLevel()) {
+        if (currentLevel == GeneratorOptions.PlaylistType.EVERY_ARTIST.getType()) {
             playlistName = dir.getFileName().toString();
         }
 
-        if (currentLevel == GeneratorOptions.PlaylistLevel.ONE_FOR_ALL.getLevel()) {
+        if (currentLevel == GeneratorOptions.PlaylistType.ONE_FOR_ALL.getType()) {
             playlistName = generatorOptions.getPlaylistName();
         }
 

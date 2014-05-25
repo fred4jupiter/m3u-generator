@@ -13,7 +13,7 @@ public class GeneratorOptions {
 
     private final String baseDir;
 
-    private final PlaylistLevel playlistLevel;
+    private final PlaylistType playlistType;
 
     private String playlistName = DEFAULT_PLAYLIST_NAME;
 
@@ -23,9 +23,9 @@ public class GeneratorOptions {
 
     private PlaylistFileType playlistFileType = PlaylistFileType.M3U;
 
-    public GeneratorOptions(String baseDir, PlaylistLevel playlistLevel) {
+    public GeneratorOptions(String baseDir, PlaylistType playlistType) {
         this.baseDir = baseDir;
-        this.playlistLevel = playlistLevel;
+        this.playlistType = playlistType;
         this.targetDir = baseDir;
         this.sortByTrackNumber = false;
     }
@@ -38,8 +38,8 @@ public class GeneratorOptions {
         this.playlistFileType = playlistFileType;
     }
 
-    public PlaylistLevel getPlaylistLevel() {
-        return playlistLevel;
+    public PlaylistType getPlaylistType() {
+        return playlistType;
     }
 
     public String getBaseDir() {
@@ -84,21 +84,21 @@ public class GeneratorOptions {
         this.targetDir = targetDir;
     }
 
-    public enum PlaylistLevel {
+    public enum PlaylistType {
         ONE_FOR_ALL(0),
 
         EVERY_ARTIST(1),
 
         EVERY_ARTIST_ALBUM(2);
 
-        private int level;
+        private int type;
 
-        private PlaylistLevel(int level) {
-            this.level = level;
+        private PlaylistType(int type) {
+            this.type = type;
         }
 
-        public int getLevel() {
-            return level;
+        public int getType() {
+            return type;
         }
     }
 }

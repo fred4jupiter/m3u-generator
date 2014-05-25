@@ -35,7 +35,7 @@ public class PlaylistGeneratorTest {
 
     @Test
     public void generateOnePlaylistForAll() {
-        GeneratorOptions generatorOptions = new GeneratorOptions(BASE_DIR, GeneratorOptions.PlaylistLevel.ONE_FOR_ALL);
+        GeneratorOptions generatorOptions = new GeneratorOptions(BASE_DIR, GeneratorOptions.PlaylistType.ONE_FOR_ALL);
 
         playlistGenerator.createPlaylist(generatorOptions);
 
@@ -49,7 +49,7 @@ public class PlaylistGeneratorTest {
 
     @Test
     public void generatePlaylistsForEveryArtist() {
-        GeneratorOptions generatorOptions = new GeneratorOptions(BASE_DIR, GeneratorOptions.PlaylistLevel.EVERY_ARTIST);
+        GeneratorOptions generatorOptions = new GeneratorOptions(BASE_DIR, GeneratorOptions.PlaylistType.EVERY_ARTIST);
 
         playlistGenerator.createPlaylist(generatorOptions);
 
@@ -59,7 +59,7 @@ public class PlaylistGeneratorTest {
 
     @Test
     public void generatePlaylistsForEveryArtistAndAlbum() {
-        GeneratorOptions generatorOptions = new GeneratorOptions(BASE_DIR, GeneratorOptions.PlaylistLevel.EVERY_ARTIST_ALBUM);
+        GeneratorOptions generatorOptions = new GeneratorOptions(BASE_DIR, GeneratorOptions.PlaylistType.EVERY_ARTIST_ALBUM);
 
         playlistGenerator.createPlaylist(generatorOptions);
 
