@@ -1,6 +1,6 @@
 package de.fred4jupiter.m3u.generator.playlisting;
 
-import de.fred4jupiter.m3u.generator.PlaylistFileType;
+import de.fred4jupiter.m3u.generator.service.PlaylistFileType;
 import de.fred4jupiter.m3u.generator.service.PlaylistCreationException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;

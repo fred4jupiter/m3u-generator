@@ -12,6 +12,9 @@ import java.nio.file.FileVisitResult;
 import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 
+/**
+ * Directory visitor for collecting the mp3 file names.
+ */
 public class DirectoryVisitor extends SimpleFileVisitor<Path> {
 
     private static final Logger LOG = LoggerFactory.getLogger(DirectoryVisitor.class);

@@ -1,11 +1,12 @@
 package de.fred4jupiter.m3u.generator.service;
 
-import de.fred4jupiter.m3u.generator.PlaylistFileType;
-
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+/**
+ * Container for all available options in playlist creation.
+ */
 public class GeneratorOptions {
 
     private static final String DEFAULT_PLAYLIST_NAME = "Playlist";

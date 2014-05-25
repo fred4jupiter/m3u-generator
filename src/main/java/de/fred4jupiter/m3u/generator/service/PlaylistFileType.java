@@ -1,4 +1,4 @@
-package de.fred4jupiter.m3u.generator;
+package de.fred4jupiter.m3u.generator.service;
 
 public enum PlaylistFileType {
 

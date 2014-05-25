@@ -3,30 +3,15 @@ package de.fred4jupiter.m3u.generator.service;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import java.io.IOException;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:/META-INF/spring/spring-shell-plugin.xml")
 public class ManualPlaylistGeneratorTest {
 
     @Autowired
-//    @Qualifier("m3uPlaylistGenerator")
-    @Qualifier("treeWalkingPlaylistGenerator")
     private PlaylistGenerator playlistGenerator;
-
-    @Test
-    public void generateOnePlaylistForAll() throws IOException {
-        final boolean sortByTrackNumber = false;
-        //final String baseDir = "e:/Mike Oldfield";
-//        final String baseDir = "m:/Musik/30SecondsToMars";
-        final String baseDir = "d:/Temp3";
-
-        playlistGenerator.createOnePlaylistForAll(baseDir, sortByTrackNumber);
-    }
 
     @Test
     public void createPlaylistLeveOneForAll() {

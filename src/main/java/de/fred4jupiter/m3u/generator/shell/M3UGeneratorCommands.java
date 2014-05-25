@@ -1,11 +1,11 @@
 package de.fred4jupiter.m3u.generator.shell;
 
 import de.fred4jupiter.m3u.generator.Constants;
+import de.fred4jupiter.m3u.generator.service.GeneratorOptions;
 import de.fred4jupiter.m3u.generator.service.PlaylistGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.shell.core.CommandMarker;
 import org.springframework.shell.core.annotation.CliAvailabilityIndicator;
 import org.springframework.shell.core.annotation.CliCommand;
@@ -23,7 +23,6 @@ public class M3UGeneratorCommands implements CommandMarker {
     private static final Logger LOG = LoggerFactory.getLogger(M3UGeneratorCommands.class);
 
     @Autowired
-    @Qualifier("m3uPlaylistGenerator")
     private PlaylistGenerator playlistGenerator;
 
     @CliAvailabilityIndicator({"m3u oneForAll", "m3u forEachDirLevelOne"})
@@ -41,9 +40,13 @@ public class M3UGeneratorCommands implements CommandMarker {
                     unspecifiedDefaultValue = "false") final Boolean sortByTrackNumber) {
 
         LOG.debug("createOnePlaylistForAll: baseDir={}, playlistName={}", baseDir, playlistName);
+        GeneratorOptions generatorOptions = new GeneratorOptions(baseDir, GeneratorOptions.PlaylistLevel.ONE_FOR_ALL);
+        generatorOptions.setPlaylistName(playlistName);
+        generatorOptions.setSortByTrackNumber(sortByTrackNumber);
+
         try {
-            this.playlistGenerator.createOnePlaylistForAll(baseDir, playlistName, sortByTrackNumber);
-        } catch (IOException e) {
+            this.playlistGenerator.createPlaylist(generatorOptions);
+        } catch (Exception e) {
             LOG.error(e.getMessage(), e);
         }
     }
@@ -55,9 +58,12 @@ public class M3UGeneratorCommands implements CommandMarker {
                     specifiedDefaultValue = "true", unspecifiedDefaultValue = "false") final Boolean sortByTrackNumber) {
         LOG.debug("createPlaylistsForEachDirectory: baseDir={}", baseDir);
 
+        GeneratorOptions generatorOptions = new GeneratorOptions(baseDir, GeneratorOptions.PlaylistLevel.EVERY_ARTIST_ALBUM);
+        generatorOptions.setSortByTrackNumber(sortByTrackNumber);
+
         try {
-            this.playlistGenerator.createPlaylistsForEachDirectory(baseDir, sortByTrackNumber);
-        } catch (IOException e) {
+            this.playlistGenerator.createPlaylist(generatorOptions);
+        } catch (Exception e) {
             LOG.error(e.getMessage(), e);
         }
     }

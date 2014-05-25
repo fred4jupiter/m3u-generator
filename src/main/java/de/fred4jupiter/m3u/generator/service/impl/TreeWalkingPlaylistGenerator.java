@@ -22,28 +22,6 @@ public class TreeWalkingPlaylistGenerator implements PlaylistGenerator {
     @Qualifier("fileNameFileSorter")
     private FileSorter fileNameSorter;
 
-    @Override
-    public void createOnePlaylistForAll(String baseDir, String playlistName, boolean sortByTrackNumber) throws IOException {
-        GeneratorOptions generatorOptions = new GeneratorOptions(baseDir, GeneratorOptions.PlaylistLevel.ONE_FOR_ALL);
-        generatorOptions.setSortByTrackNumber(sortByTrackNumber);
-        generatorOptions.setPlaylistName(playlistName);
-        createPlaylist(generatorOptions);
-    }
-
-    @Override
-    public void createOnePlaylistForAll(String baseDir, boolean sortByTrackNumber) throws IOException {
-        GeneratorOptions generatorOptions = new GeneratorOptions(baseDir, GeneratorOptions.PlaylistLevel.ONE_FOR_ALL);
-        generatorOptions.setSortByTrackNumber(sortByTrackNumber);
-        createPlaylist(generatorOptions);
-    }
-
-    @Override
-    public void createPlaylistsForEachDirectory(String baseDir, boolean sortByTrackNumber) throws IOException {
-        GeneratorOptions generatorOptions = new GeneratorOptions(baseDir, GeneratorOptions.PlaylistLevel.EVERY_ARTIST_ALBUM);
-        generatorOptions.setSortByTrackNumber(sortByTrackNumber);
-        createPlaylist(generatorOptions);
-    }
-
     public void createPlaylist(GeneratorOptions generatorOptions) {
         FileSorter fileSorter = selectFileSorter(generatorOptions);
         FileContentCollector fileContentCollector = new FileContentCollector(generatorOptions);
