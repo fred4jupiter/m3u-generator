@@ -1,6 +1,6 @@
 package de.fred4jupiter.m3u.generator.service;
 
-import de.fred4jupiter.m3u.generator.PlaylistFile;
+import de.fred4jupiter.m3u.generator.PlaylistFileType;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Test;
@@ -30,7 +30,7 @@ public class PlaylistGeneratorTest {
         final String playlistName = "Playlist";
 
         playlistGenerator.createOnePlaylistForAll(BASE_DIR, playlistName, false);
-        File generatedPlaylistFile = new File(BASE_DIR + File.separator + playlistName + PlaylistFile.M3U.getFileExtension());
+        File generatedPlaylistFile = new File(BASE_DIR + File.separator + playlistName + PlaylistFileType.M3U.getFileExtension());
         Assert.assertThat(generatedPlaylistFile.exists(), Matchers.equalTo(true));
         String playlistContent = FileUtils.read(generatedPlaylistFile);
         Assert.assertNotNull(playlistContent);

@@ -1,21 +1,18 @@
 package de.fred4jupiter.m3u.generator.service;
 
-import de.fred4jupiter.m3u.generator.PlaylistFile;
+import de.fred4jupiter.m3u.generator.PlaylistFileType;
 
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-/**
- * Created by michael on 25.05.2014.
- */
 public class GeneratorOptions {
 
     private static final String DEFAULT_PLAYLIST_NAME = "Playlist";
 
-    private String baseDir;
+    private final String baseDir;
 
-    private int level;
+    private final PlaylistLevel playlistLevel;
 
     private String playlistName = DEFAULT_PLAYLIST_NAME;
 
@@ -23,25 +20,25 @@ public class GeneratorOptions {
 
     private String targetDir;
 
-    private PlaylistFile playlistFile = PlaylistFile.M3U;
+    private PlaylistFileType playlistFileType = PlaylistFileType.M3U;
 
-    public GeneratorOptions(String baseDir, int level) {
+    public GeneratorOptions(String baseDir, PlaylistLevel playlistLevel) {
         this.baseDir = baseDir;
-        this.level = level;
+        this.playlistLevel = playlistLevel;
         this.targetDir = baseDir;
         this.sortByTrackNumber = false;
     }
 
-    public PlaylistFile getPlaylistFile() {
-        return playlistFile;
+    public PlaylistFileType getPlaylistFileType() {
+        return playlistFileType;
     }
 
-    public void setPlaylistFile(PlaylistFile playlistFile) {
-        this.playlistFile = playlistFile;
+    public void setPlaylistFileType(PlaylistFileType playlistFileType) {
+        this.playlistFileType = playlistFileType;
     }
 
-    public int getLevel() {
-        return level;
+    public PlaylistLevel getPlaylistLevel() {
+        return playlistLevel;
     }
 
     public String getBaseDir() {
@@ -84,5 +81,23 @@ public class GeneratorOptions {
 
     public void setTargetDir(String targetDir) {
         this.targetDir = targetDir;
+    }
+
+    public enum PlaylistLevel {
+        ONE_FOR_ALL(0),
+
+        EVERY_ARTIST(1),
+
+        EVERY_ARTIST_ALBUM(2);
+
+        private int level;
+
+        private PlaylistLevel(int level) {
+            this.level = level;
+        }
+
+        public int getLevel() {
+            return level;
+        }
     }
 }

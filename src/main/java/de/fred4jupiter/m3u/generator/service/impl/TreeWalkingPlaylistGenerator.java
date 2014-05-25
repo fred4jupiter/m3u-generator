@@ -24,7 +24,7 @@ public class TreeWalkingPlaylistGenerator implements PlaylistGenerator {
 
     @Override
     public void createOnePlaylistForAll(String baseDir, String playlistName, boolean sortByTrackNumber) throws IOException {
-        GeneratorOptions generatorOptions = new GeneratorOptions(baseDir, 0);
+        GeneratorOptions generatorOptions = new GeneratorOptions(baseDir, GeneratorOptions.PlaylistLevel.ONE_FOR_ALL);
         generatorOptions.setSortByTrackNumber(sortByTrackNumber);
         generatorOptions.setPlaylistName(playlistName);
         createPlaylist(generatorOptions);
@@ -32,14 +32,14 @@ public class TreeWalkingPlaylistGenerator implements PlaylistGenerator {
 
     @Override
     public void createOnePlaylistForAll(String baseDir, boolean sortByTrackNumber) throws IOException {
-        GeneratorOptions generatorOptions = new GeneratorOptions(baseDir, 0);
+        GeneratorOptions generatorOptions = new GeneratorOptions(baseDir, GeneratorOptions.PlaylistLevel.ONE_FOR_ALL);
         generatorOptions.setSortByTrackNumber(sortByTrackNumber);
         createPlaylist(generatorOptions);
     }
 
     @Override
     public void createPlaylistsForEachDirectory(String baseDir, boolean sortByTrackNumber) throws IOException {
-        GeneratorOptions generatorOptions = new GeneratorOptions(baseDir, 2);
+        GeneratorOptions generatorOptions = new GeneratorOptions(baseDir, GeneratorOptions.PlaylistLevel.EVERY_ARTIST_ALBUM);
         generatorOptions.setSortByTrackNumber(sortByTrackNumber);
         createPlaylist(generatorOptions);
     }

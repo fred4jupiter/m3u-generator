@@ -1,6 +1,6 @@
 package de.fred4jupiter.m3u.generator.playlisting;
 
-import de.fred4jupiter.m3u.generator.PlaylistFile;
+import de.fred4jupiter.m3u.generator.PlaylistFileType;
 import de.fred4jupiter.m3u.generator.service.PlaylistCreationException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -20,10 +20,10 @@ public final class ContentToFileWriter {
     }
 
     public static File writePlaylistToFile(String content, File baseDirFile, String playlistName) {
-        return writePlaylistToFile(content, baseDirFile, playlistName, PlaylistFile.M3U);
+        return writePlaylistToFile(content, baseDirFile, playlistName, PlaylistFileType.M3U);
     }
 
-    public static File writePlaylistToFile(String content, File baseDirFile, String playlistName, PlaylistFile playlistFile) {
+    public static File writePlaylistToFile(String content, File baseDirFile, String playlistName, PlaylistFileType playlistFileType) {
         Assert.notNull(playlistName, "playlistName must not be null");
         try {
             if (StringUtils.isBlank(content)) {
@@ -31,10 +31,10 @@ public final class ContentToFileWriter {
                 return null;
             }
 
-            String fileName = playlistName + playlistFile.getFileExtension();
+            String fileName = playlistName + playlistFileType.getFileExtension();
             File file = new File(baseDirFile.getAbsolutePath() + File.separator + fileName);
             LOG.info("writing playlist file: {}", file.getCanonicalFile());
-            FileUtils.writeStringToFile(file, content, playlistFile.getEncoding());
+            FileUtils.writeStringToFile(file, content, playlistFileType.getEncoding());
             return file;
         } catch (IOException e) {
             throw new PlaylistCreationException(e.getMessage(), e);

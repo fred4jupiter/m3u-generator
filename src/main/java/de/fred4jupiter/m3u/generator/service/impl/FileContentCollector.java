@@ -1,6 +1,6 @@
 package de.fred4jupiter.m3u.generator.service.impl;
 
-import de.fred4jupiter.m3u.generator.PlaylistFile;
+import de.fred4jupiter.m3u.generator.PlaylistFileType;
 import de.fred4jupiter.m3u.generator.service.GeneratorOptions;
 import de.fred4jupiter.m3u.generator.service.PlaylistCreationException;
 import org.apache.commons.collections4.CollectionUtils;
@@ -49,12 +49,12 @@ public class FileContentCollector {
         }
 
         try {
-            final PlaylistFile playlistFile = generatorOptions.getPlaylistFile();
-            final String fileName = playlistName + playlistFile.getFileExtension();
+            final PlaylistFileType playlistFileType = generatorOptions.getPlaylistFileType();
+            final String fileName = playlistName + playlistFileType.getFileExtension();
             final File completePlayListFileName = new File(generatorOptions.getTargetDirAsFile() + File.separator + fileName);
 
             LOG.info("writing playlist: {}", completePlayListFileName.getCanonicalFile());
-            FileUtils.writeLines(completePlayListFileName, playlistFile.getEncoding(), fileContent);
+            FileUtils.writeLines(completePlayListFileName, playlistFileType.getEncoding(), fileContent);
             init();
         } catch (IOException e) {
             throw new PlaylistCreationException(e.getMessage(), e);

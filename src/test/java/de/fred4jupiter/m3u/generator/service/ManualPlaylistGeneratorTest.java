@@ -1,6 +1,5 @@
 package de.fred4jupiter.m3u.generator.service;
 
-import de.fred4jupiter.m3u.generator.service.PlaylistGenerator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,49 +29,26 @@ public class ManualPlaylistGeneratorTest {
     }
 
     @Test
-    public void createPlaylistLevel0() throws IOException {
-        final boolean sortByTrackNumber = false;
-        //final String baseDir = "e:/Mike Oldfield";
-//        final String baseDir = "m:/Musik/30SecondsToMars";
+    public void createPlaylistLeveOneForAll() {
         final String baseDir = "d:/Temp3";
 
-        GeneratorOptions generatorOptions = new GeneratorOptions(baseDir, 0);
-        generatorOptions.setSortByTrackNumber(sortByTrackNumber);
-
+        GeneratorOptions generatorOptions = new GeneratorOptions(baseDir, GeneratorOptions.PlaylistLevel.ONE_FOR_ALL);
         playlistGenerator.createPlaylist(generatorOptions);
     }
 
     @Test
-    public void createPlaylistLeveOneForAll() throws IOException {
+    public void createPlaylistLevelForArtists() {
         final String baseDir = "d:/Temp3";
 
-        GeneratorOptions generatorOptions = new GeneratorOptions(baseDir, 0);
+        GeneratorOptions generatorOptions = new GeneratorOptions(baseDir, GeneratorOptions.PlaylistLevel.EVERY_ARTIST);
         playlistGenerator.createPlaylist(generatorOptions);
     }
 
     @Test
-    public void createPlaylistLevelForArtists() throws IOException {
+    public void createPlaylistLevelForEachArtistAndAlbum() {
         final String baseDir = "d:/Temp3";
 
-        GeneratorOptions generatorOptions = new GeneratorOptions(baseDir, 1);
+        GeneratorOptions generatorOptions = new GeneratorOptions(baseDir, GeneratorOptions.PlaylistLevel.EVERY_ARTIST_ALBUM);
         playlistGenerator.createPlaylist(generatorOptions);
-    }
-
-    @Test
-    public void createPlaylistLevelForEachArtistAndAlbum() throws IOException {
-        final String baseDir = "d:/Temp3";
-
-        GeneratorOptions generatorOptions = new GeneratorOptions(baseDir, 2);
-        playlistGenerator.createPlaylist(generatorOptions);
-    }
-
-    @Test
-    public void generatePlaylistForEachDir() throws IOException {
-        final boolean sortByTrackNumber = false;
-
-        final String baseDir = "m:/Musik/30SecondsToMars";
-        //final String baseDir = "d:/Temp2";
-
-        playlistGenerator.createPlaylistsForEachDirectory(baseDir, sortByTrackNumber);
     }
 }

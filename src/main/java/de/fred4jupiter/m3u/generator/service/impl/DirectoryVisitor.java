@@ -45,25 +45,25 @@ public class DirectoryVisitor extends SimpleFileVisitor<Path> {
 
         String playlistName = determinePlaylistName(dir, currentLevel);
 
-        if (generatorOptions.getLevel() == currentLevel) {
+        if (generatorOptions.getPlaylistLevel().getLevel() >= currentLevel) {
             fileContentCollector.writeContentToPlaylistFile(playlistName);
         }
     }
 
     private String determinePlaylistName(Path dir, int currentLevel) {
-        String playlistName = generatorOptions.getPlaylistName();
+        String playlistName = null;
 
-        if (currentLevel == 2) {
+        if (currentLevel == GeneratorOptions.PlaylistLevel.EVERY_ARTIST_ALBUM.getLevel()) {
             String album = dir.getFileName().toString();
             String artist = dir.getParent().getFileName().toString();
             playlistName = artist + " - " + album;
         }
 
-        if (currentLevel == 1) {
+        if (currentLevel == GeneratorOptions.PlaylistLevel.EVERY_ARTIST.getLevel()) {
             playlistName = dir.getFileName().toString();
         }
 
-        if (currentLevel == 0) {
+        if (currentLevel == GeneratorOptions.PlaylistLevel.ONE_FOR_ALL.getLevel()) {
             playlistName = generatorOptions.getPlaylistName();
         }
 
