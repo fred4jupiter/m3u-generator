@@ -10,3 +10,4 @@ target/
 *.iml
 
 *.m3u
+spring-shell.log
