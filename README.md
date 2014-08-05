@@ -27,9 +27,5 @@ For more help, please just enter
 
     spring-shell>help
 
-## Travis CI ##
-
-The current build status can be found on
-
 ## Travis Build Status ##
 [![Build Status](https://travis-ci.org/fred4jupiter/m3u-generator.svg?branch=master)](https://travis-ci.org/fred4jupiter/m3u-generator)
