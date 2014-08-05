@@ -31,4 +31,5 @@ For more help, please just enter
 
 The current build status can be found on
 
-[https://travis-ci.org/fred4jupiter/m3u-generator](https://travis-ci.org/fred4jupiter/m3u-generator "Travis CI")
+## Travis Build Status ##
+[![Build Status](https://travis-ci.org/fred4jupiter/m3u-generator.svg?branch=master)](https://travis-ci.org/fred4jupiter/m3u-generator)
