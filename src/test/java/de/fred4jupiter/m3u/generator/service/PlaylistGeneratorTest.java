@@ -75,13 +75,33 @@ public class PlaylistGeneratorTest extends AbstractShellIntegrationTest {
     }
 
     @Test
-    public void forEachArtistAndAlbum() {
+    public void createForEachArtistAndAlbum() {
+        CommandResult commandResult = getShell().executeCommand("m3u create --basedir " + BASE_DIR);
+        assertNotNull(commandResult);
+        assertThat(commandResult.isSuccess(), equalTo(true));
+
+        checkPlaylist("genesis - Abacab.m3u", "genesis" + File.separator + "Abacab" + File.separator + "song1.mp3");
+        checkPlaylist("nirvana - unplugged.m3u", "nirvana" + File.separator + "unplugged" + File.separator + "song2.mp3");
+    }
+
+    @Test
+    public void createForEachArtistAndAlbumWithType() {
         CommandResult commandResult = getShell().executeCommand("m3u create --type EVERY_ARTIST_ALBUM --basedir " + BASE_DIR);
         assertNotNull(commandResult);
         assertThat(commandResult.isSuccess(), equalTo(true));
 
         checkPlaylist("genesis - Abacab.m3u", "genesis" + File.separator + "Abacab" + File.separator + "song1.mp3");
         checkPlaylist("nirvana - unplugged.m3u", "nirvana" + File.separator + "unplugged" + File.separator + "song2.mp3");
+    }
+
+    @Test
+    public void createForEachArtist() {
+        CommandResult commandResult = getShell().executeCommand("m3u create --type EVERY_ARTIST --basedir " + BASE_DIR);
+        assertNotNull(commandResult);
+        assertThat(commandResult.isSuccess(), equalTo(true));
+
+        checkPlaylist("genesis.m3u", "genesis" + File.separator + "Abacab" + File.separator + "song1.mp3");
+        checkPlaylist("nirvana.m3u", "nirvana" + File.separator + "unplugged" + File.separator + "song2.mp3");
     }
 
     private void checkPlaylist(String playlistName, String fileContent) {

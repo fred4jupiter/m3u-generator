@@ -2,7 +2,7 @@
 <configuration>
 	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
-			<pattern>%d %p [%c] - %m%n</pattern>
+			<pattern>%d %p [%c{1}] - %m%n</pattern>
 		</encoder>
 	</appender>
 
