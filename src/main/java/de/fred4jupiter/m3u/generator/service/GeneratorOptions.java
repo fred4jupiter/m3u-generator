@@ -1,5 +1,7 @@
 package de.fred4jupiter.m3u.generator.service;
 
+import de.fred4jupiter.m3u.generator.Constants;
+
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -9,13 +11,11 @@ import java.nio.file.Paths;
  */
 public class GeneratorOptions {
 
-    private static final String DEFAULT_PLAYLIST_NAME = "Playlist";
-
     private final String baseDir;
 
     private final PlaylistType playlistType;
 
-    private String playlistName = DEFAULT_PLAYLIST_NAME;
+    private String playlistName = Constants.DEFAULT_PLAYLIST_NAME;
 
     private boolean sortByTrackNumber;
 
@@ -32,10 +32,6 @@ public class GeneratorOptions {
 
     public PlaylistFileType getPlaylistFileType() {
         return playlistFileType;
-    }
-
-    public void setPlaylistFileType(PlaylistFileType playlistFileType) {
-        this.playlistFileType = playlistFileType;
     }
 
     public PlaylistType getPlaylistType() {

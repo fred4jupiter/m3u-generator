@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.core.CommandMarker;
-import org.springframework.shell.core.annotation.CliAvailabilityIndicator;
 import org.springframework.shell.core.annotation.CliCommand;
 import org.springframework.shell.core.annotation.CliOption;
 import org.springframework.stereotype.Component;
@@ -24,16 +23,10 @@ public class M3UGeneratorCommands implements CommandMarker {
     @Autowired
     private PlaylistGenerator playlistGenerator;
 
-    @CliAvailabilityIndicator({"m3u oneForAll", "m3u forEachDirLevelOne"})
-    public boolean isPlaylistCommandsAvailable() {
-        //always available
-        return true;
-    }
-
     @CliCommand(value = "m3u oneForAll", help = "Generates one playlist for a given base directory")
     public void createOnePlaylistForAll(
             @CliOption(key = {"basedir"}, mandatory = true, help = "The directory where to scan files for the M3U playlist.") final String baseDir,
-            @CliOption(key = {"playlistName"}, help = "The name of the playlist.", specifiedDefaultValue = Constants.DEFAULT_PLAYLIST_NAME,
+            @CliOption(key = {"playlistName"}, help = "The name of the playlist without extension.", specifiedDefaultValue = Constants.DEFAULT_PLAYLIST_NAME,
                     unspecifiedDefaultValue = Constants.DEFAULT_PLAYLIST_NAME) final String playlistName,
             @CliOption(key = {"sortByTrackNumber"}, help = "Sorts by ID-Tag track number if available.", specifiedDefaultValue = "true",
                     unspecifiedDefaultValue = "false") final Boolean sortByTrackNumber) {

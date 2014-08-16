@@ -1,12 +1,11 @@
 package de.fred4jupiter.m3u.generator.service;
 
+import de.fred4jupiter.m3u.generator.AbstractShellIntegrationTest;
+import de.fred4jupiter.m3u.generator.Constants;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.shell.core.CommandResult;
 import org.springframework.shell.support.util.FileUtils;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.io.File;
 import java.nio.file.Paths;
@@ -16,14 +15,9 @@ import static org.hamcrest.Matchers.containsString;
 import static org.junit.Assert.assertNotNull;
 import static org.springframework.test.util.MatcherAssertionErrors.assertThat;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:/META-INF/spring/spring-shell-plugin.xml")
-public class PlaylistGeneratorTest {
+public class PlaylistGeneratorTest extends AbstractShellIntegrationTest {
 
     private static final String BASE_DIR = "src/test/resources/mp3DummyFolder";
-
-    @Autowired
-    private PlaylistGenerator playlistGenerator;
 
     @Before
     public void cleanup() {
@@ -34,12 +28,14 @@ public class PlaylistGeneratorTest {
     }
 
     @Test
-    public void generateOnePlaylistForAll() {
-        GeneratorOptions generatorOptions = new GeneratorOptions(BASE_DIR, GeneratorOptions.PlaylistType.ONE_FOR_ALL);
+    public void oneForAll() {
+        CommandResult commandResult = getShell().executeCommand("m3u oneForAll --basedir " + BASE_DIR);
+        assertNotNull(commandResult);
+        assertThat(commandResult.isSuccess(), equalTo(true));
 
-        playlistGenerator.createPlaylist(generatorOptions);
+        File targetDir = new File(BASE_DIR);
 
-        File generatedPlaylistFile = new File(generatorOptions.getTargetDir() + File.separator + generatorOptions.getPlaylistName() + PlaylistFileType.M3U.getFileExtension());
+        File generatedPlaylistFile = new File(targetDir + File.separator + Constants.DEFAULT_PLAYLIST_NAME + PlaylistFileType.M3U.getFileExtension());
         assertThat(generatedPlaylistFile.exists(), equalTo(true));
         String playlistContent = FileUtils.read(generatedPlaylistFile);
         assertNotNull(playlistContent);
@@ -48,20 +44,41 @@ public class PlaylistGeneratorTest {
     }
 
     @Test
-    public void generatePlaylistsForEveryArtist() {
-        GeneratorOptions generatorOptions = new GeneratorOptions(BASE_DIR, GeneratorOptions.PlaylistType.EVERY_ARTIST);
+    public void oneForAllWithOtherPlaylistName() {
+        CommandResult commandResult = getShell().executeCommand("m3u oneForAll --basedir " + BASE_DIR + " --playlistName MyList");
+        assertNotNull(commandResult);
+        assertThat(commandResult.isSuccess(), equalTo(true));
 
-        playlistGenerator.createPlaylist(generatorOptions);
+        File targetDir = new File(BASE_DIR);
+
+        File generatedPlaylistFile = new File(targetDir + File.separator + "MyList.m3u");
+        assertThat(generatedPlaylistFile.exists(), equalTo(true));
+        String playlistContent = FileUtils.read(generatedPlaylistFile);
+        assertNotNull(playlistContent);
+        assertThat(playlistContent, containsString("genesis" + File.separator + "Abacab" + File.separator + "song1.mp3"));
+        assertThat(playlistContent, containsString("nirvana" + File.separator + "unplugged" + File.separator + "song2.mp3"));
+    }
+
+    @Test
+    public void oneForAllSortByTracknumber() {
+        // tbd
+    }
+
+    @Test
+    public void forEachArtist() {
+        CommandResult commandResult = getShell().executeCommand("m3u forEachArtist --basedir " + BASE_DIR);
+        assertNotNull(commandResult);
+        assertThat(commandResult.isSuccess(), equalTo(true));
 
         checkPlaylist("genesis.m3u", "genesis" + File.separator + "Abacab" + File.separator + "song1.mp3");
         checkPlaylist("nirvana.m3u", "nirvana" + File.separator + "unplugged" + File.separator + "song2.mp3");
     }
 
     @Test
-    public void generatePlaylistsForEveryArtistAndAlbum() {
-        GeneratorOptions generatorOptions = new GeneratorOptions(BASE_DIR, GeneratorOptions.PlaylistType.EVERY_ARTIST_ALBUM);
-
-        playlistGenerator.createPlaylist(generatorOptions);
+    public void forEachArtistAndAlbum() {
+        CommandResult commandResult = getShell().executeCommand("m3u create --type EVERY_ARTIST_ALBUM --basedir " + BASE_DIR);
+        assertNotNull(commandResult);
+        assertThat(commandResult.isSuccess(), equalTo(true));
 
         checkPlaylist("genesis - Abacab.m3u", "genesis" + File.separator + "Abacab" + File.separator + "song1.mp3");
         checkPlaylist("nirvana - unplugged.m3u", "nirvana" + File.separator + "unplugged" + File.separator + "song2.mp3");
