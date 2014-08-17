@@ -9,23 +9,22 @@ To build the project run
     mvn install
 
 To run the programm call (replace VERSION with current version)
-
-    cd target
-    java -jar m3u-generator-VERSION.jar
-
-On Spring Shell you have the following options
-
-    spring-shell>m3u forEachDirLevelOnem3u
-    spring-shell>m3u oneForAll
+    
+    java -jar target/m3u-generator-VERSION.jar
     
 Examples:
 
-    spring-shell>m3u forEachDirLevelOne --basedir d:/Temp4
-    spring-shell>m3u oneForAll --basedir d:/Temp4 --playlistName "Fred.m3u"
+    m3u-shell>m3u oneForAll --basedir d:/Temp4
+	m3u-shell>m3u oneForAll --basedir d:/Temp4 --playlistName MyList
+	m3u-shell>m3u oneForAll --basedir d:/Temp4 --playlistName MyList --sortByTrackNumber
+	m3u-shell>m3u forEachArtist --basedir d:/Temp4
+	m3u-shell>m3u create --basedir d:/Temp4
+	m3u-shell>m3u create --type EVERY_ARTIST_ALBUM --basedir d:/Temp4
+    
 
 For more help, please just enter
 
-    spring-shell>help
+    m3u-shell>help
 
 ## Travis Build Status ##
 [![Build Status](https://travis-ci.org/fred4jupiter/m3u-generator.svg?branch=master)](https://travis-ci.org/fred4jupiter/m3u-generator)
