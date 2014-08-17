@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -42,26 +43,8 @@ public class PlaylistGeneratorTest extends AbstractShellIntegrationTest {
         assertNotNull(commandResult);
         assertThat(commandResult.isSuccess(), equalTo(true));
 
-        File targetDir = new File(BASE_DIR);
-
-        File generatedPlaylistFile = new File(targetDir + File.separator + Constants.DEFAULT_PLAYLIST_NAME + PlaylistFileType.M3U.getFileExtension());
-        assertThat(generatedPlaylistFile.exists(), equalTo(true));
-        List<String> fileContent = IOUtils.readLines(new FileInputStream(generatedPlaylistFile));
-        assertNotNull(fileContent);
-        assertThat(fileContent.size(), equalTo(4));
-        // sorting by filename
-        assertThat(fileContent.get(0), containsString(getPathFor(GENESIS_ANOTHER_RECORD_FILE_NAME)));
-        assertThat(fileContent.get(1), containsString(getPathFor(GENESIS_KEEP_IT_DARKER_FILE_NAME)));
-        assertThat(fileContent.get(2), containsString(getPathFor(NIRVANA_COME_AS_YOU_ARE_FILE_NAME)));
-        assertThat(fileContent.get(3), containsString(getPathFor(NIRVANA_ON_A_PLAIN_FILE_NAME)));
-    }
-
-    private String getPathFor(String fileName) {
-        if (fileName.contains("Genesis")) {
-            return "genesis" + File.separator + "Abacab" + File.separator + fileName;
-        } else {
-            return "nirvana" + File.separator + "unplugged" + File.separator + fileName;
-        }
+        String playlistName = Constants.DEFAULT_PLAYLIST_NAME + PlaylistFileType.M3U.getFileExtension();
+        checkPlaylist(playlistName, GENESIS_ANOTHER_RECORD_FILE_NAME, GENESIS_KEEP_IT_DARKER_FILE_NAME, NIRVANA_COME_AS_YOU_ARE_FILE_NAME, NIRVANA_ON_A_PLAIN_FILE_NAME);
     }
 
     @Test
@@ -70,18 +53,8 @@ public class PlaylistGeneratorTest extends AbstractShellIntegrationTest {
         assertNotNull(commandResult);
         assertThat(commandResult.isSuccess(), equalTo(true));
 
-        File targetDir = new File(BASE_DIR);
-
-        File generatedPlaylistFile = new File(targetDir + File.separator + "MyList.m3u");
-        assertThat(generatedPlaylistFile.exists(), equalTo(true));
-        List<String> fileContent = IOUtils.readLines(new FileInputStream(generatedPlaylistFile));
-        assertNotNull(fileContent);
-        assertThat(fileContent.size(), equalTo(4));
-        // sorting by filename
-        assertThat(fileContent.get(0), containsString(getPathFor(GENESIS_ANOTHER_RECORD_FILE_NAME)));
-        assertThat(fileContent.get(1), containsString(getPathFor(GENESIS_KEEP_IT_DARKER_FILE_NAME)));
-        assertThat(fileContent.get(2), containsString(getPathFor(NIRVANA_COME_AS_YOU_ARE_FILE_NAME)));
-        assertThat(fileContent.get(3), containsString(getPathFor(NIRVANA_ON_A_PLAIN_FILE_NAME)));
+        String playlistName = "MyList" + PlaylistFileType.M3U.getFileExtension();
+        checkPlaylist(playlistName, GENESIS_ANOTHER_RECORD_FILE_NAME, GENESIS_KEEP_IT_DARKER_FILE_NAME, NIRVANA_COME_AS_YOU_ARE_FILE_NAME, NIRVANA_ON_A_PLAIN_FILE_NAME);
     }
 
     @Test
@@ -90,18 +63,8 @@ public class PlaylistGeneratorTest extends AbstractShellIntegrationTest {
         assertNotNull(commandResult);
         assertThat(commandResult.isSuccess(), equalTo(true));
 
-        File targetDir = new File(BASE_DIR);
-
-        File generatedPlaylistFile = new File(targetDir + File.separator + Constants.DEFAULT_PLAYLIST_NAME + PlaylistFileType.M3U.getFileExtension());
-        assertThat(generatedPlaylistFile.exists(), equalTo(true));
-        List<String> fileContent = IOUtils.readLines(new FileInputStream(generatedPlaylistFile));
-        assertNotNull(fileContent);
-        assertThat(fileContent.size(), equalTo(4));
-        // sorting by filename
-        assertThat(fileContent.get(0), containsString(getPathFor(GENESIS_KEEP_IT_DARKER_FILE_NAME)));
-        assertThat(fileContent.get(1), containsString(getPathFor(GENESIS_ANOTHER_RECORD_FILE_NAME)));
-        assertThat(fileContent.get(2), containsString(getPathFor(NIRVANA_ON_A_PLAIN_FILE_NAME)));
-        assertThat(fileContent.get(3), containsString(getPathFor(NIRVANA_COME_AS_YOU_ARE_FILE_NAME)));
+        String playlistName = Constants.DEFAULT_PLAYLIST_NAME + PlaylistFileType.M3U.getFileExtension();
+        checkPlaylist(playlistName, GENESIS_KEEP_IT_DARKER_FILE_NAME, GENESIS_ANOTHER_RECORD_FILE_NAME, NIRVANA_ON_A_PLAIN_FILE_NAME, NIRVANA_COME_AS_YOU_ARE_FILE_NAME);
     }
 
     @Test
@@ -120,8 +83,8 @@ public class PlaylistGeneratorTest extends AbstractShellIntegrationTest {
         assertNotNull(commandResult);
         assertThat(commandResult.isSuccess(), equalTo(true));
 
-        checkPlaylist("genesis.m3u", GENESIS_ANOTHER_RECORD_FILE_NAME, GENESIS_KEEP_IT_DARKER_FILE_NAME);
-        checkPlaylist("nirvana.m3u", NIRVANA_COME_AS_YOU_ARE_FILE_NAME, NIRVANA_ON_A_PLAIN_FILE_NAME);
+        checkPlaylist("genesis - Abacab.m3u", GENESIS_ANOTHER_RECORD_FILE_NAME, GENESIS_KEEP_IT_DARKER_FILE_NAME);
+        checkPlaylist("nirvana - unplugged.m3u", NIRVANA_COME_AS_YOU_ARE_FILE_NAME, NIRVANA_ON_A_PLAIN_FILE_NAME);
     }
 
     @Test
@@ -130,8 +93,8 @@ public class PlaylistGeneratorTest extends AbstractShellIntegrationTest {
         assertNotNull(commandResult);
         assertThat(commandResult.isSuccess(), equalTo(true));
 
-        checkPlaylist("genesis.m3u", GENESIS_ANOTHER_RECORD_FILE_NAME, GENESIS_KEEP_IT_DARKER_FILE_NAME);
-        checkPlaylist("nirvana.m3u", NIRVANA_COME_AS_YOU_ARE_FILE_NAME, NIRVANA_ON_A_PLAIN_FILE_NAME);
+        checkPlaylist("genesis - Abacab.m3u", GENESIS_ANOTHER_RECORD_FILE_NAME, GENESIS_KEEP_IT_DARKER_FILE_NAME);
+        checkPlaylist("nirvana - unplugged.m3u", NIRVANA_COME_AS_YOU_ARE_FILE_NAME, NIRVANA_ON_A_PLAIN_FILE_NAME);
     }
 
     @Test
@@ -144,6 +107,18 @@ public class PlaylistGeneratorTest extends AbstractShellIntegrationTest {
         checkPlaylist("nirvana.m3u", NIRVANA_COME_AS_YOU_ARE_FILE_NAME, NIRVANA_ON_A_PLAIN_FILE_NAME);
     }
 
+    @Test
+    public void createOneForAllWithOtherTargetDir() throws IOException {
+        final String targetDir = "target" + File.separator + "other";
+        CommandResult commandResult = getShell().executeCommand("m3u create --type ONE_FOR_ALL --basedir " + BASE_DIR + " --targetDir " + targetDir);
+        assertNotNull(commandResult);
+        assertThat(commandResult.isSuccess(), equalTo(true));
+
+        String playlistName = Constants.DEFAULT_PLAYLIST_NAME + PlaylistFileType.M3U.getFileExtension();
+        List<String> files = Arrays.asList(GENESIS_ANOTHER_RECORD_FILE_NAME, GENESIS_KEEP_IT_DARKER_FILE_NAME, NIRVANA_COME_AS_YOU_ARE_FILE_NAME, NIRVANA_ON_A_PLAIN_FILE_NAME);
+        checkPlaylistInTarget(playlistName, targetDir, files);
+    }
+
     private void checkPlaylist(String playlistName, String... fileNames) throws IOException {
         File playlistFile = new File(BASE_DIR + File.separator + playlistName);
         assertThat("playlist does not exists: " + playlistFile, playlistFile.getAbsoluteFile().exists(), equalTo(true));
@@ -154,6 +129,28 @@ public class PlaylistGeneratorTest extends AbstractShellIntegrationTest {
 
         for (int i = 0; i < fileContent.size(); i++) {
             assertThat(fileContent.get(i), containsString(getPathFor(fileNames[i])));
+        }
+    }
+
+    private void checkPlaylistInTarget(String playlistName, String targetDir, List<String> fileNames) throws IOException {
+        String baseFolder = targetDir != null ? targetDir : BASE_DIR;
+        File playlistFile = new File(baseFolder + File.separator + playlistName);
+        assertThat("playlist does not exists: " + playlistFile, playlistFile.getAbsoluteFile().exists(), equalTo(true));
+
+        List<String> fileContent = IOUtils.readLines(new FileInputStream(playlistFile));
+        assertNotNull(fileContent);
+        assertThat(fileContent.size(), equalTo(fileNames.size()));
+
+        for (int i = 0; i < fileContent.size(); i++) {
+            assertThat(fileContent.get(i), containsString(getPathFor(fileNames.get(i))));
+        }
+    }
+
+    private String getPathFor(String fileName) {
+        if (fileName.contains("Genesis")) {
+            return "genesis" + File.separator + "Abacab" + File.separator + fileName;
+        } else {
+            return "nirvana" + File.separator + "unplugged" + File.separator + fileName;
         }
     }
 }
