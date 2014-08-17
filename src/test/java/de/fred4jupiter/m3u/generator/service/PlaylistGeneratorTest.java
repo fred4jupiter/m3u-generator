@@ -3,13 +3,11 @@ package de.fred4jupiter.m3u.generator.service;
 import de.fred4jupiter.m3u.generator.AbstractShellIntegrationTest;
 import de.fred4jupiter.m3u.generator.Constants;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.shell.core.CommandResult;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -120,33 +118,19 @@ public class PlaylistGeneratorTest extends AbstractShellIntegrationTest {
         assertThat(commandResult.isSuccess(), equalTo(true));
 
         String playlistName = Constants.DEFAULT_PLAYLIST_NAME + PlaylistFileType.M3U.getFileExtension();
-        checkPlaylistContains(playlistName, targetDir, Arrays.asList(GENESIS_ANOTHER_RECORD_FILE_NAME, GENESIS_KEEP_IT_DARKER_FILE_NAME), 4);
-        checkPlaylistContains(playlistName, targetDir, Arrays.asList(NIRVANA_COME_AS_YOU_ARE_FILE_NAME, NIRVANA_ON_A_PLAIN_FILE_NAME), 4);
+        checkPlaylist(playlistName, targetDir, Arrays.asList(GENESIS_ANOTHER_RECORD_FILE_NAME, GENESIS_KEEP_IT_DARKER_FILE_NAME), 4);
+        checkPlaylist(playlistName, targetDir, Arrays.asList(NIRVANA_COME_AS_YOU_ARE_FILE_NAME, NIRVANA_ON_A_PLAIN_FILE_NAME), 4);
     }
 
     private void checkPlaylist(String playlistName, String... fileNames) throws IOException {
-        checkPlaylistContains(playlistName, BASE_DIR, Arrays.asList(fileNames), fileNames.length);
+        checkPlaylist(playlistName, BASE_DIR, Arrays.asList(fileNames), fileNames.length);
     }
 
     private void checkPlaylist(String playlistName, int numberOfEntries, String... fileNames) throws IOException {
-        checkPlaylistContains(playlistName, BASE_DIR, Arrays.asList(fileNames), numberOfEntries);
+        checkPlaylist(playlistName, BASE_DIR, Arrays.asList(fileNames), numberOfEntries);
     }
 
-//    private void checkPlaylistInTarget(String playlistName, String targetDir, List<String> fileNames, int numberOfEntries) throws IOException {
-//        String baseFolder = targetDir != null ? targetDir : BASE_DIR;
-//        File playlistFile = new File(baseFolder + File.separator + playlistName);
-//        assertThat("playlist does not exists: " + playlistFile, playlistFile.getAbsoluteFile().exists(), equalTo(true));
-//
-//        List<String> fileContent = IOUtils.readLines(new FileInputStream(playlistFile));
-//        assertNotNull(fileContent);
-//        assertThat(fileContent.size(), equalTo(numberOfEntries));
-//
-//        for (int i = 0; i < fileContent.size(); i++) {
-//            assertThat(fileContent.get(i), containsString(getPathFor(fileNames.get(i))));
-//        }
-//    }
-
-    private void checkPlaylistContains(String playlistName, String targetDir, List<String> fileNames, int numberOfEntries) throws IOException {
+    private void checkPlaylist(String playlistName, String targetDir, List<String> fileNames, int numberOfEntries) throws IOException {
         File playlistFile = new File(targetDir + File.separator + playlistName);
         assertThat("playlist does not exists: " + playlistFile, playlistFile.getAbsoluteFile().exists(), equalTo(true));
 
