@@ -120,16 +120,7 @@ public class PlaylistGeneratorTest extends AbstractShellIntegrationTest {
     }
 
     private void checkPlaylist(String playlistName, String... fileNames) throws IOException {
-        File playlistFile = new File(BASE_DIR + File.separator + playlistName);
-        assertThat("playlist does not exists: " + playlistFile, playlistFile.getAbsoluteFile().exists(), equalTo(true));
-
-        List<String> fileContent = IOUtils.readLines(new FileInputStream(playlistFile));
-        assertNotNull(fileContent);
-        assertThat(fileContent.size(), equalTo(fileNames.length));
-
-        for (int i = 0; i < fileContent.size(); i++) {
-            assertThat(fileContent.get(i), containsString(getPathFor(fileNames[i])));
-        }
+        checkPlaylistInTarget(playlistName, BASE_DIR, Arrays.asList(fileNames));
     }
 
     private void checkPlaylistInTarget(String playlistName, String targetDir, List<String> fileNames) throws IOException {

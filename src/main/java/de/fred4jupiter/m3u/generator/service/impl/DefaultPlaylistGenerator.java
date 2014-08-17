@@ -1,7 +1,7 @@
 package de.fred4jupiter.m3u.generator.service.impl;
 
 import de.fred4jupiter.m3u.generator.service.GeneratorOptions;
-import de.fred4jupiter.m3u.generator.service.PlaylistCreationException;
+import de.fred4jupiter.m3u.generator.PlaylistCreationException;
 import de.fred4jupiter.m3u.generator.service.PlaylistGenerator;
 import de.fred4jupiter.m3u.generator.sorting.FileSorter;
 import org.springframework.beans.factory.annotation.Autowired;

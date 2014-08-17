@@ -1,4 +1,4 @@
-package de.fred4jupiter.m3u.generator.service;
+package de.fred4jupiter.m3u.generator;
 
 /**
  * Exception throwing on playlist creation.
