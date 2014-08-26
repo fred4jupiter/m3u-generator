@@ -57,8 +57,7 @@ public class M3UGeneratorCommands implements CommandMarker {
                     specifiedDefaultValue = "true", unspecifiedDefaultValue = "false") final Boolean sortByTrackNumber,
             @CliOption(key = {"type"}, unspecifiedDefaultValue = "EVERY_ARTIST_ALBUM", help = "Select which kind of playlist you want to create") GeneratorOptions.PlaylistType type,
             @CliOption(key = {"targetDir"}, help = "Select the directory where to write the playlists into.") final String targetDir) {
-        LOG.debug("baseDir={}", baseDir);
-        LOG.debug("targetDir={}", targetDir);
+        LOG.debug("baseDir={}, type={}, targetDir={}", baseDir, type, targetDir);
 
         GeneratorOptions generatorOptions = new GeneratorOptions(baseDir, type);
         generatorOptions.setSortByTrackNumber(sortByTrackNumber);
