@@ -6,7 +6,7 @@
 
     <groupId>de.fred4jupiter.m3u.generator</groupId>
     <artifactId>m3u-generator</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>1.0.0</version>
 
     <packaging>jar</packaging>
 
