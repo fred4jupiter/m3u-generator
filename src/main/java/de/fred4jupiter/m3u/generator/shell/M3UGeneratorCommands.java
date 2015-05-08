@@ -43,11 +43,15 @@ public class M3UGeneratorCommands implements CommandMarker {
             @CliOption(key = {"basedir"}, mandatory = true, help = "The directory where to scan files for the M3U playlist.") final String baseDir,
             @CliOption(key = {"sortByTrackNumber"}, help = "Sorts by ID-Tag track number if available.",
                     specifiedDefaultValue = "true", unspecifiedDefaultValue = "false") final Boolean sortByTrackNumber) {
-        LOG.debug("baseDir={}", baseDir);
+        createPlaylist(baseDir, sortByTrackNumber, GeneratorOptions.PlaylistType.EVERY_ARTIST, null);
+    }
 
-        GeneratorOptions generatorOptions = new GeneratorOptions(baseDir, GeneratorOptions.PlaylistType.EVERY_ARTIST);
-        generatorOptions.setSortByTrackNumber(sortByTrackNumber);
-        createByOptions(generatorOptions);
+    @CliCommand(value = "m3u forEachArtistAlbum", help = "Generates playlists for each artist and album.")
+    public void createPlaylistsForArtistAlbum(
+            @CliOption(key = {"basedir"}, mandatory = true, help = "The directory where to scan files for the M3U playlist.") final String baseDir,
+            @CliOption(key = {"sortByTrackNumber"}, help = "Sorts by ID-Tag track number if available.",
+                    specifiedDefaultValue = "true", unspecifiedDefaultValue = "false") final Boolean sortByTrackNumber) {
+        createPlaylist(baseDir, sortByTrackNumber, GeneratorOptions.PlaylistType.EVERY_ARTIST_ALBUM, null);
     }
 
     @CliCommand(value = "m3u create", help = "Generates playlists for given type.")
