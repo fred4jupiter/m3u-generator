@@ -27,4 +27,4 @@ For more help, please just enter
     m3u-shell>help
 
 ## Travis Build Status ##
-[![Build Status](https://travis-ci.org/fred4jupiter/m3u-generator.svg?branch=master)](https://travis-ci.org/fred4jupiter/m3u-generator)
+[![Build Status](https://travis-ci.org/fred4jupiter/m3u-generator.svg?branch=master)](https://travis-ci.org/fred4jupiter/m3u-generator/)
