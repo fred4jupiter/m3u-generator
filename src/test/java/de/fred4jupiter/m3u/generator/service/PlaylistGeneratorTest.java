@@ -9,15 +9,13 @@ import org.springframework.shell.core.CommandResult;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.hasItem;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
-import static org.springframework.test.util.MatcherAssertionErrors.assertThat;
 
 public class PlaylistGeneratorTest extends AbstractShellIntegrationTest {
 
@@ -32,6 +30,7 @@ public class PlaylistGeneratorTest extends AbstractShellIntegrationTest {
     @Before
     public void cleanup() {
         File[] files = Paths.get(BASE_DIR).toFile().listFiles(file -> file.isFile() && file.getName().endsWith(PlaylistFileType.M3U.getFileExtension()));
+        assertThat(files).isNotNull();
         for (File file : files) {
             file.delete();
         }
@@ -41,7 +40,7 @@ public class PlaylistGeneratorTest extends AbstractShellIntegrationTest {
     public void oneForAll() throws IOException {
         CommandResult commandResult = getShell().executeCommand("m3u oneForAll --basedir " + BASE_DIR);
         assertNotNull(commandResult);
-        assertThat(commandResult.isSuccess(), equalTo(true));
+        assertThat(commandResult.isSuccess()).isTrue();
 
         String playlistName = Constants.DEFAULT_PLAYLIST_NAME + PlaylistFileType.M3U.getFileExtension();
         checkPlaylist(playlistName, 4, GENESIS_ANOTHER_RECORD_FILE_NAME, GENESIS_KEEP_IT_DARKER_FILE_NAME);
@@ -52,7 +51,7 @@ public class PlaylistGeneratorTest extends AbstractShellIntegrationTest {
     public void oneForAllWithOtherPlaylistName() throws IOException {
         CommandResult commandResult = getShell().executeCommand("m3u oneForAll --basedir " + BASE_DIR + " --playlistName MyList");
         assertNotNull(commandResult);
-        assertThat(commandResult.isSuccess(), equalTo(true));
+        assertThat(commandResult.isSuccess()).isTrue();
 
         String playlistName = "MyList" + PlaylistFileType.M3U.getFileExtension();
         checkPlaylist(playlistName, 4, GENESIS_ANOTHER_RECORD_FILE_NAME, GENESIS_KEEP_IT_DARKER_FILE_NAME);
@@ -63,7 +62,7 @@ public class PlaylistGeneratorTest extends AbstractShellIntegrationTest {
     public void oneForAllSortByTracknumber() throws IOException {
         CommandResult commandResult = getShell().executeCommand("m3u oneForAll --basedir " + BASE_DIR + " --sortByTrackNumber");
         assertNotNull(commandResult);
-        assertThat(commandResult.isSuccess(), equalTo(true));
+        assertThat(commandResult.isSuccess()).isTrue();
 
         String playlistName = Constants.DEFAULT_PLAYLIST_NAME + PlaylistFileType.M3U.getFileExtension();
         checkPlaylist(playlistName, 4, GENESIS_KEEP_IT_DARKER_FILE_NAME, GENESIS_ANOTHER_RECORD_FILE_NAME);
@@ -74,7 +73,7 @@ public class PlaylistGeneratorTest extends AbstractShellIntegrationTest {
     public void forEachArtist() throws IOException {
         CommandResult commandResult = getShell().executeCommand("m3u forEachArtist --basedir " + BASE_DIR);
         assertNotNull(commandResult);
-        assertThat(commandResult.isSuccess(), equalTo(true));
+        assertThat(commandResult.isSuccess()).isTrue();
 
         checkPlaylist("genesis.m3u", GENESIS_ANOTHER_RECORD_FILE_NAME, GENESIS_KEEP_IT_DARKER_FILE_NAME);
         checkPlaylist("nirvana.m3u", NIRVANA_COME_AS_YOU_ARE_FILE_NAME, NIRVANA_ON_A_PLAIN_FILE_NAME);
@@ -84,7 +83,7 @@ public class PlaylistGeneratorTest extends AbstractShellIntegrationTest {
     public void createForEachArtistAndAlbum() throws IOException {
         CommandResult commandResult = getShell().executeCommand("m3u create --basedir " + BASE_DIR);
         assertNotNull(commandResult);
-        assertThat(commandResult.isSuccess(), equalTo(true));
+        assertThat(commandResult.isSuccess()).isTrue();
 
         checkPlaylist("genesis - Abacab.m3u", GENESIS_ANOTHER_RECORD_FILE_NAME, GENESIS_KEEP_IT_DARKER_FILE_NAME);
         checkPlaylist("nirvana - unplugged.m3u", NIRVANA_COME_AS_YOU_ARE_FILE_NAME, NIRVANA_ON_A_PLAIN_FILE_NAME);
@@ -94,7 +93,7 @@ public class PlaylistGeneratorTest extends AbstractShellIntegrationTest {
     public void createForEachArtistAndAlbumWithType() throws IOException {
         CommandResult commandResult = getShell().executeCommand("m3u create --type EVERY_ARTIST_ALBUM --basedir " + BASE_DIR);
         assertNotNull(commandResult);
-        assertThat(commandResult.isSuccess(), equalTo(true));
+        assertThat(commandResult.isSuccess()).isTrue();
 
         checkPlaylist("genesis - Abacab.m3u", GENESIS_ANOTHER_RECORD_FILE_NAME, GENESIS_KEEP_IT_DARKER_FILE_NAME);
         checkPlaylist("nirvana - unplugged.m3u", NIRVANA_COME_AS_YOU_ARE_FILE_NAME, NIRVANA_ON_A_PLAIN_FILE_NAME);
@@ -104,7 +103,7 @@ public class PlaylistGeneratorTest extends AbstractShellIntegrationTest {
     public void createForEachArtist() throws IOException {
         CommandResult commandResult = getShell().executeCommand("m3u create --type EVERY_ARTIST --basedir " + BASE_DIR);
         assertNotNull(commandResult);
-        assertThat(commandResult.isSuccess(), equalTo(true));
+        assertThat(commandResult.isSuccess()).isTrue();
 
         checkPlaylist("genesis.m3u", GENESIS_ANOTHER_RECORD_FILE_NAME, GENESIS_KEEP_IT_DARKER_FILE_NAME);
         checkPlaylist("nirvana.m3u", NIRVANA_COME_AS_YOU_ARE_FILE_NAME, NIRVANA_ON_A_PLAIN_FILE_NAME);
@@ -115,7 +114,7 @@ public class PlaylistGeneratorTest extends AbstractShellIntegrationTest {
         final String targetDir = "target" + File.separator + "other";
         CommandResult commandResult = getShell().executeCommand("m3u create --type ONE_FOR_ALL --basedir " + BASE_DIR + " --targetDir " + targetDir);
         assertNotNull(commandResult);
-        assertThat(commandResult.isSuccess(), equalTo(true));
+        assertThat(commandResult.isSuccess()).isTrue();
 
         String playlistName = Constants.DEFAULT_PLAYLIST_NAME + PlaylistFileType.M3U.getFileExtension();
         checkPlaylist(playlistName, targetDir, Arrays.asList(GENESIS_ANOTHER_RECORD_FILE_NAME, GENESIS_KEEP_IT_DARKER_FILE_NAME), 4);
@@ -132,19 +131,19 @@ public class PlaylistGeneratorTest extends AbstractShellIntegrationTest {
 
     private void checkPlaylist(String playlistName, String targetDir, List<String> fileNames, int numberOfEntries) throws IOException {
         File playlistFile = new File(targetDir + File.separator + playlistName);
-        assertThat("playlist does not exists: " + playlistFile, playlistFile.getAbsoluteFile().exists(), equalTo(true));
+        assertThat(playlistFile.getAbsoluteFile().exists()).isTrue();
 
-        List<String> fileContent = FileUtils.readLines(playlistFile);
+        List<String> fileContent = FileUtils.readLines(playlistFile, StandardCharsets.UTF_8);
         assertNotNull(fileContent);
-        assertThat(fileContent.size(), equalTo(numberOfEntries));
+        assertThat(fileContent.size()).isEqualTo(numberOfEntries);
 
         int lastIndex = 0;
         for (int i = 0; i < fileNames.size(); i++) {
             String fileNameToCheck = fileNames.get(i);
             int index = indexFor(fileContent, fileNameToCheck);
-            assertThat(fileContent, hasItem(containsString(getPathFor(fileNameToCheck))));
+            assertThat(fileContent).anyMatch(line -> line.contains(getPathFor(fileNameToCheck)));
             if (index > 0) {
-                assertThat(lastIndex < index, equalTo(true));
+                assertThat(lastIndex < index).isTrue();
             }
             lastIndex = index;
         }
