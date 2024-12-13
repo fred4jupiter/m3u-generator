@@ -1,6 +1,6 @@
 name: Release project
 on:
-  pull_request:
+  workflow_dispatch:
 
 jobs:
   release:
@@ -27,5 +27,5 @@ jobs:
       - name: Release
         uses: huggingface/semver-release-action@latest
         with:
-          branches: "master"
+          branches: master
           dryRun: true
